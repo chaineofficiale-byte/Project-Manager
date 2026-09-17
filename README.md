@@ -1,16 +1,78 @@
-# React + Vite
+# Project Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Un mini gestionnaire personnel de projets web/applications, sécurisé par authentification admin.
 
-Currently, two official plugins are available:
+## Stack technique
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript**
+- **Vite 8**
+- **Tailwind CSS v4**
+- **Supabase** (auth + base de données)
+- **React Router v7**
+- **Lucide React** (icônes)
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+```
 
-## Expanding the Oxlint configuration
+## Configuration Supabase
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. Créez un compte sur [Supabase](https://supabase.com)
+2. Créez un nouveau projet
+3. Allez dans **SQL Editor** et exécutez le contenu du fichier `supabase-setup.sql`
+4. Créez un compte admin dans **Authentication > Users > Add user**
+5. Copiez votre **Project URL** et **Anon Key** dans les variables d'environnement
+
+## Variables d'environnement
+
+Créez un fichier `.env` à la racine du projet :
+
+```env
+VITE_SUPABASE_URL=https://votre-projet.supabase.co
+VITE_SUPABASE_ANON_KEY=votre_cle_anon
+```
+
+Voir `.env.example` pour la liste des variables requises.
+
+## Lancement local
+
+```bash
+npm run dev
+```
+
+Le site sera accessible sur `http://localhost:5173`.
+
+## Build production
+
+```bash
+npm run build
+```
+
+Le dossier `dist/` sera généré, prêt pour le déploiement.
+
+## Déploiement Vercel
+
+1. Connectez votre repository GitHub à Vercel
+2. Configurez les variables d'environnement dans Vercel Dashboard
+3. Le déploiement se fait automatiquement
+
+## Routes
+
+| Route | Description |
+|-------|-------------|
+| `/login` | Page de connexion |
+| `/dashboard` | Tableau de bord des projets |
+| `/project/new` | Ajouter un projet |
+| `/project/:id` | Détails d'un projet |
+| `/project/:id/edit` | Modifier un projet |
+
+## Statuts des projets
+
+| Statut | Emoji | Description |
+|--------|-------|-------------|
+| À faire | 🔴 | Pas encore commencé |
+| En cours | 🟡 | En développement |
+| En pause | 🟠 | Temporairement arrêté |
+| Terminé | 🟢 | Projet fini |
