@@ -1,11 +1,11 @@
-import { LogOut, Settings, LayoutGrid, Palette } from 'lucide-react'
+import { LogOut, Settings, LayoutGrid, Files } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import logoMark from '@/assets/logo-mark.png'
 
 const NAV_ITEMS = [
   { path: '/dashboard', label: 'Projets', icon: LayoutGrid },
-  { path: '/creatives', label: 'Créatives', icon: Palette },
+  { path: '/fichiers', label: 'Fichiers', icon: Files },
 ]
 
 export function Header() {
@@ -30,7 +30,7 @@ export function Header() {
               className="h-9 w-9 rounded-xl shadow-sm shadow-slate-900/10"
             />
             <h1 className="text-xl font-bold">
-              <span className="bg-gradient-to-r from-[#542a52] via-[#6d3a69] to-[#fb9b8a] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#4f46e5] via-[#8b5cf6] to-[#a78bfa] bg-clip-text text-transparent">
                 Project
               </span>
               <span className="text-gray-900"> Manager</span>
@@ -44,8 +44,8 @@ export function Header() {
                 onClick={() => navigate(path)}
                 className={`btn-mac inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-medium transition-all ${
                   isActive(path)
-                    ? 'bg-gradient-to-r from-[#542a52] to-[#6d3a69] text-white shadow-sm shadow-slate-900/10'
-                    : 'text-gray-600 hover:bg-[#f7ecf6] hover:text-gray-900'
+                    ? 'bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] text-white shadow-sm shadow-slate-900/10'
+                    : 'text-gray-600 hover:bg-[#eef2ff] hover:text-gray-900'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -58,7 +58,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/settings')}
-            className="btn-mac inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6] hover:text-gray-900"
+            className="btn-mac inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 transition-all hover:border-[#a5b4fc] hover:bg-[#eef2ff] hover:text-gray-900"
           >
             <Settings className="h-4 w-4" />
             <span className="hidden sm:inline">Paramètres</span>
@@ -81,8 +81,8 @@ export function Header() {
             onClick={() => navigate(path)}
             className={`btn-mac inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all ${
               isActive(path)
-                ? 'bg-gradient-to-r from-[#542a52] to-[#6d3a69] text-white shadow-sm shadow-slate-900/10'
-                : 'text-gray-600 hover:bg-[#f7ecf6] hover:text-gray-900'
+                ? 'bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] text-white shadow-sm shadow-slate-900/10'
+                : 'text-gray-600 hover:bg-[#eef2ff] hover:text-gray-900'
             }`}
           >
             <Icon className="h-4 w-4" />

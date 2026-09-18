@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Mail, Loader2, CheckCircle2 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
-const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #f8fafc 0%, #f8fafc 50%, #eef2ff 100%)'
 
 export function ForgotPassword() {
   const navigate = useNavigate()
@@ -42,17 +42,17 @@ export function ForgotPassword() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="animate-blob absolute -left-32 top-[-10%] h-[400px] w-[400px] opacity-30 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #fdd9d0, #cfa3c8)' }}
+          style={{ background: 'linear-gradient(135deg, #dbeafe, #a5b4fc)' }}
         />
         <div
           className="animate-blob absolute -right-24 bottom-[-15%] h-[350px] w-[350px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
+          style={{ background: 'linear-gradient(135deg, #e0e7ff, #bfdbfe)', animationDelay: '2s' }}
         />
         <div
           className="absolute inset-0 opacity-[0.35]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(84,42,82,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.05) 1px, transparent 1px)',
+              'linear-gradient(rgba(79,70,229,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.05) 1px, transparent 1px)',
             backgroundSize: '50px 50px',
           }}
         />
@@ -79,12 +79,12 @@ export function ForgotPassword() {
               </div>
               <h1 className="mb-2 text-2xl font-bold text-gray-900">Email envoyé 📬</h1>
               <p className="mb-6 text-sm leading-relaxed text-gray-500">
-                Si un compte existe pour <span className="font-medium text-[#542a52]">{email}</span>, un lien de
+                Si un compte existe pour <span className="font-medium text-[#4f46e5]">{email}</span>, un lien de
                 réinitialisation vient d'être envoyé. Vérifiez votre boîte de réception (et vos spams).
               </p>
               <button
                 onClick={() => navigate('/login')}
-                className="btn-mac w-full rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
+                className="btn-mac w-full rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#4338ca] hover:to-[#7c3aed]"
               >
                 Retour à la connexion
               </button>
@@ -93,7 +93,7 @@ export function ForgotPassword() {
             /* ===== Form state ===== */
             <>
               <div className="mb-8">
-                <div className="icon-tile mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-[#542a52]">
+                <div className="icon-tile mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-[#4f46e5]">
                   <Mail className="h-6 w-6" />
                 </div>
                 <h1 className="mb-2 text-2xl font-bold text-gray-900">Mot de passe oublié ?</h1>
@@ -115,8 +115,8 @@ export function ForgotPassword() {
                   <label htmlFor="email" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                     Adresse email
                   </label>
-                  <div className="group relative rounded-xl border border-gray-200 bg-white/70 transition-all duration-300 focus-within:border-[#542a52] focus-within:bg-white focus-within:shadow-lg focus-within:shadow-[#542a52]/10">
-                    <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors focus-within:text-[#542a52]" />
+                  <div className="group relative rounded-xl border border-gray-200 bg-white/70 transition-all duration-300 focus-within:border-[#4f46e5] focus-within:bg-white focus-within:shadow-lg focus-within:shadow-[#4f46e5]/10">
+                    <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors focus-within:text-[#4f46e5]" />
                     <input
                       type="email"
                       id="email"
@@ -134,7 +134,7 @@ export function ForgotPassword() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)] disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-4 py-3.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_10px_22px_-8px_rgba(79,70,229,0.45)] disabled:opacity-50"
                 >
                   {submitting ? (
                     <>

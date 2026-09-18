@@ -9,7 +9,7 @@ import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Toast } from '@/components/Toast'
 import { DashboardSkeleton } from '@/components/Skeleton'
 
-const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #f8fafc 0%, #f8fafc 50%, #eef2ff 100%)'
 
 type SortKey = 'updated_at' | 'created_at' | 'name' | 'progress' | 'priority'
 
@@ -95,21 +95,21 @@ export function Dashboard() {
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div
           className="animate-blob absolute -left-40 top-[-10%] h-[500px] w-[500px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #eed7ec, #e0bcd9)' }}
+          style={{ background: 'linear-gradient(135deg, #dbeafe, #c7d2fe)' }}
         />
         <div
           className="animate-blob absolute -right-32 top-[25%] h-[420px] w-[420px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
+          style={{ background: 'linear-gradient(135deg, #e0e7ff, #bfdbfe)', animationDelay: '2s' }}
         />
         <div
           className="animate-blob absolute bottom-[-15%] left-[35%] h-[360px] w-[360px] opacity-20 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #f6cfe9, #eab4de)', animationDelay: '4s' }}
+          style={{ background: 'linear-gradient(135deg, #ddd6fe, #c4b5fd)', animationDelay: '4s' }}
         />
         <div
           className="absolute inset-0 opacity-[0.35]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(84,42,82,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.05) 1px, transparent 1px)',
+              'linear-gradient(rgba(79,70,229,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.05) 1px, transparent 1px)',
             backgroundSize: '50px 50px',
           }}
         />
@@ -132,7 +132,7 @@ export function Dashboard() {
               </div>
               <button
                 onClick={() => navigate('/project/new')}
-                className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)]"
+                className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_10px_22px_-8px_rgba(79,70,229,0.45)]"
                 style={{ animationDelay: '120ms' }}
               >
                 <Plus className="h-4 w-4" />
@@ -148,13 +148,13 @@ export function Dashboard() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 {/* Search */}
                 <div className="group relative flex-1">
-                  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-[#542a52]" />
+                  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-[#4f46e5]" />
                   <input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Rechercher un projet..."
-                    className="w-full rounded-xl border border-gray-200 bg-white/70 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#542a52]/20"
+                    className="w-full rounded-xl border border-gray-200 bg-white/70 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#4f46e5] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/20"
                   />
                 </div>
 
@@ -162,7 +162,7 @@ export function Dashboard() {
                 <select
                   value={priorityFilter}
                   onChange={(e) => setPriorityFilter(e.target.value === 'all' ? 'all' : (Number(e.target.value) as ProjectPriority))}
-                  className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:outline-none focus:ring-2 focus:ring-[#542a52]/20 [&>option]:bg-white"
+                  className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#4f46e5] focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/20 [&>option]:bg-white"
                 >
                   <option value="all">Toutes priorités</option>
                   {([1, 2, 3, 4, 5] as ProjectPriority[]).map((p) => (
@@ -175,7 +175,7 @@ export function Dashboard() {
                   <select
                     value={techFilter}
                     onChange={(e) => setTechFilter(e.target.value)}
-                    className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:outline-none focus:ring-2 focus:ring-[#542a52]/20 [&>option]:bg-white"
+                    className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#4f46e5] focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/20 [&>option]:bg-white"
                   >
                     <option value="all">Toutes technologies</option>
                     {allTechnologies.map((t) => (
@@ -188,7 +188,7 @@ export function Dashboard() {
                 <select
                   value={sortKey}
                   onChange={(e) => setSortKey(e.target.value as SortKey)}
-                  className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:outline-none focus:ring-2 focus:ring-[#542a52]/20 [&>option]:bg-white"
+                  className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#4f46e5] focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/20 [&>option]:bg-white"
                 >
                   <option value="updated_at">Modifié récemment</option>
                   <option value="created_at">Créé récemment</option>
@@ -204,8 +204,8 @@ export function Dashboard() {
                   onClick={() => setStatusFilter('all')}
                   className={`btn-mac inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
                     statusFilter === 'all'
-                      ? 'bg-gradient-to-r from-[#542a52] to-[#6d3a69] text-white shadow-sm shadow-slate-900/10'
-                      : 'text-gray-500 hover:bg-[#f7ecf6] hover:text-gray-900'
+                      ? 'bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] text-white shadow-sm shadow-slate-900/10'
+                      : 'text-gray-500 hover:bg-[#eef2ff] hover:text-gray-900'
                   }`}
                 >
                   <LayoutGrid className="h-3.5 w-3.5" />
@@ -217,8 +217,8 @@ export function Dashboard() {
                     onClick={() => setStatusFilter(value)}
                     className={`btn-mac rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
                       statusFilter === value
-                        ? 'bg-gradient-to-r from-[#542a52] to-[#6d3a69] text-white shadow-sm shadow-slate-900/10'
-                        : 'text-gray-500 hover:bg-[#f7ecf6] hover:text-gray-900'
+                        ? 'bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] text-white shadow-sm shadow-slate-900/10'
+                        : 'text-gray-500 hover:bg-[#eef2ff] hover:text-gray-900'
                     }`}
                   >
                     {label}
@@ -232,9 +232,9 @@ export function Dashboard() {
           {projects.length === 0 ? (
             <div className="animate-scale-in flex flex-col items-center justify-center py-24">
               <div className="relative mb-8">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#fdd9d0]/60 to-[#ecd2e9]/50 blur-2xl" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#dbeafe]/60 to-[#e0e7ff]/50 blur-2xl" />
                 <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-gray-200 bg-white/80 backdrop-blur-xl">
-                  <FolderOpen className="h-11 w-11 text-[#542a52]" />
+                  <FolderOpen className="h-11 w-11 text-[#4f46e5]" />
                 </div>
                 <div className="icon-tile animate-float absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full text-base">
                   ✨
@@ -246,7 +246,7 @@ export function Dashboard() {
               </p>
               <button
                 onClick={() => navigate('/project/new')}
-                className="btn-mac inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
+                className="btn-mac inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#4338ca] hover:to-[#7c3aed]"
               >
                 <Sparkles className="h-4 w-4" />
                 Ajouter mon premier projet

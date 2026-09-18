@@ -13,4 +13,9 @@
   powershell -NoProfile -Command "(Start-Process -FilePath 'npm.cmd' -ArgumentList 'run','dev','--','--port','5176','--strictPort' -RedirectStandardOutput '<log>' -RedirectStandardError '<log>.err' -WindowStyle Hidden -PassThru).Id"
   ```
   (stdout and stderr must go to different files.)
+  - Quirk: `powershell` is NOT on the Git Bash PATH here — invoke it by full
+    path: `/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe`.
+  - The Start-Process call can block past the 30 s tool timeout while Vite
+    boots; if the command times out, check the log file anyway — the server
+    is usually already up and healthy.
 - Confirm: URL answers HTTP 200 (`curl http://localhost:5176`), then register the preview with the pid.

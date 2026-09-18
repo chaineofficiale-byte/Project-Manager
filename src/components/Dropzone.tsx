@@ -51,11 +51,11 @@ export function Dropzone({ acceptLabel, onFile, disabled = false, validate }: Dr
         }}
         className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-all ${
           dragging
-            ? 'border-[#542a52] bg-[#f7ecf6] ring-2 ring-[#542a52]/20'
-            : 'border-gray-300 bg-white/60 hover:border-[#cfa3c8] hover:bg-[#f7ecf6]/40'
+            ? 'border-[#4f46e5] bg-[#eef2ff] ring-2 ring-[#4f46e5]/20'
+            : 'border-gray-300 bg-white/60 hover:border-[#a5b4fc] hover:bg-[#eef2ff]/40'
         } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
       >
-        <div className="icon-tile mb-3 flex h-12 w-12 items-center justify-center rounded-2xl text-[#542a52]">
+        <div className="icon-tile mb-3 flex h-12 w-12 items-center justify-center rounded-2xl text-[#4f46e5]">
           <UploadCloud className="h-6 w-6" />
         </div>
         <p className="text-sm font-medium text-gray-700">

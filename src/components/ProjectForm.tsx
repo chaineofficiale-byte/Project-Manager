@@ -31,7 +31,7 @@ const defaultFormData: ProjectFormData = {
 }
 
 const INPUT_CLASS =
-  'w-full rounded-xl border border-gray-200 bg-white/70 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 backdrop-blur-md transition-all focus:border-[#542a52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#542a52]/20'
+  'w-full rounded-xl border border-gray-200 bg-white/70 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 backdrop-blur-md transition-all focus:border-[#4f46e5] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/20'
 
 const LABEL_CLASS = 'mb-1.5 block text-sm font-semibold text-gray-700'
 
@@ -261,7 +261,7 @@ export function ProjectForm({
         <button
           type="button"
           onClick={addLink}
-          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#cfa3c8] bg-[#f7ecf6] px-3 py-1.5 text-xs font-medium text-[#542a52] transition-all hover:border-[#542a52] hover:bg-[#f0dfef]"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#a5b4fc] bg-[#eef2ff] px-3 py-1.5 text-xs font-medium text-[#4f46e5] transition-all hover:border-[#4f46e5] hover:bg-[#e0e7ff]"
         >
           <Plus className="h-3.5 w-3.5" />
           Ajouter un lien
@@ -317,7 +317,7 @@ export function ProjectForm({
         <button
           type="button"
           onClick={addCredential}
-          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#cfa3c8] bg-[#f7ecf6] px-3 py-1.5 text-xs font-medium text-[#542a52] transition-all hover:border-[#542a52] hover:bg-[#f0dfef]"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#a5b4fc] bg-[#eef2ff] px-3 py-1.5 text-xs font-medium text-[#4f46e5] transition-all hover:border-[#4f46e5] hover:bg-[#e0e7ff]"
         >
           <Plus className="h-3.5 w-3.5" />
           Ajouter un identifiant
@@ -377,13 +377,13 @@ export function ProjectForm({
             {formData.technologies.map((tech) => (
               <span
                 key={tech}
-                className="inline-flex items-center gap-1 rounded-full bg-[#f7ecf6] px-2.5 py-1 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]"
+                className="inline-flex items-center gap-1 rounded-full bg-[#eef2ff] px-2.5 py-1 text-xs font-medium text-[#4f46e5] ring-1 ring-[#c7d2fe]"
               >
                 {tech}
                 <button
                   type="button"
                   onClick={() => removeTechnology(tech)}
-                  className="rounded-full p-0.5 transition-colors hover:bg-[#542a52]/10"
+                  className="rounded-full p-0.5 transition-colors hover:bg-[#4f46e5]/10"
                   title={`Retirer ${tech}`}
                 >
                   <X className="h-3 w-3" />
@@ -430,7 +430,7 @@ export function ProjectForm({
             setFormData((prev) => ({ ...prev, progress: Number(e.target.value) }))
           }}
           disabled={formData.status === 'termine'}
-          className="w-full accent-[#542a52] disabled:opacity-40"
+          className="w-full accent-[#4f46e5] disabled:opacity-40"
         />
         <ProgressBar progress={formData.progress} status={formData.status} showLabel size="sm" />
       </div>
@@ -472,7 +472,7 @@ export function ProjectForm({
         <button
           type="submit"
           disabled={loading}
-          className="btn-mac inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58] disabled:opacity-50"
+          className="btn-mac inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#4338ca] hover:to-[#7c3aed] disabled:opacity-50"
         >
           {loading ? loadingLabel : submitLabel}
         </button>

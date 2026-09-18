@@ -7,12 +7,12 @@ html {
 }
 
 body {
-  background-color: #faf3f9;
+  background-color: #f8fafc;
   color: #1e293b;
 }
 
 ::selection {
-  background: rgba(84, 42, 82, 0.25);
+  background: rgba(79, 70, 229, 0.25);
 }
 
 /* ===== APPLE-STYLE ICONS ===== */
@@ -188,7 +188,7 @@ body {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #542a52 0%, #6d3a69 50%, #fb9b8a 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 50%, #a78bfa 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -206,7 +206,7 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #542a52, #6d3a69, #fb9b8a, #542a52);
+  background: linear-gradient(135deg, #4f46e5, #8b5cf6, #a78bfa, #4f46e5);
   background-size: 300% 300%;
   animation: gradient-shift 4s ease infinite;
   z-index: -1;
@@ -227,7 +227,7 @@ body {
 
 /* Input focus glow */
 .input-glow:focus {
-  box-shadow: 0 0 0 3px rgba(84, 42, 82, 0.15);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 /* ===== MACOS INTERACTION ===== */
@@ -249,7 +249,7 @@ body {
   transition-duration: 0.07s;
 }
 .btn-mac:focus-visible {
-  outline: 2px solid rgba(84, 42, 82, 0.45);
+  outline: 2px solid rgba(79, 70, 229, 0.45);
   outline-offset: 2px;
 }
 .btn-mac:disabled {

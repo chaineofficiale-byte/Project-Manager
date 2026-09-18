@@ -25,11 +25,11 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   return (
     <div className="card-lift group relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 shadow-xl shadow-slate-900/5 backdrop-blur-xl hover:border-gray-300/80">
       {/* Animated gradient overlay on hover */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#542a52]/5 via-[#6d3a69]/5 to-[#fb9b8a]/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#4f46e5]/5 via-[#8b5cf6]/5 to-[#a78bfa]/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div className="relative p-5">
         <div className="mb-3 flex items-start justify-between gap-2">
-          <h3 className="line-clamp-1 text-lg font-semibold text-gray-900 transition-colors group-hover:text-[#6d3a69]">
+          <h3 className="line-clamp-1 text-lg font-semibold text-gray-900 transition-colors group-hover:text-[#8b5cf6]">
             {project.name}
           </h3>
           <StatusBadge status={project.status} />
@@ -45,7 +45,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
           {project.technologies.slice(0, 3).map((tech) => (
             <span
               key={tech}
-              className="rounded-full bg-[#f7ecf6] px-2.5 py-0.5 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]"
+              className="rounded-full bg-[#eef2ff] px-2.5 py-0.5 text-xs font-medium text-[#4f46e5] ring-1 ring-[#c7d2fe]"
             >
               {tech}
             </span>
@@ -63,7 +63,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
         {project.responsible && (
           <div className="mb-3 flex items-center gap-1.5 text-xs text-gray-500">
-            <span className="icon-tile flex h-5 w-5 items-center justify-center rounded-full text-[#542a52]">
+            <span className="icon-tile flex h-5 w-5 items-center justify-center rounded-full text-[#4f46e5]">
               <User className="h-3 w-3" />
             </span>
             <span>{project.responsible}</span>
@@ -76,7 +76,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
         {(project.links ?? []).length > 0 && (
           <div className="mb-4 flex items-center gap-1.5 text-xs text-gray-500">
-            <ExternalLink className="h-3 w-3 text-[#fb9b8a]/80" />
+            <ExternalLink className="h-3 w-3 text-[#a78bfa]/80" />
             <span>
               {(project.links ?? []).length} lien{(project.links ?? []).length > 1 ? 's' : ''}
             </span>
@@ -97,14 +97,14 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         <div className="flex gap-2 border-t border-gray-100 pt-4">
           <button
             onClick={() => navigate(`/project/${project.id}`)}
-            className="btn-mac inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-3 py-2 text-xs font-medium text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_6px_16px_-6px_rgba(84,42,82,0.5)]"
+            className="btn-mac inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-3 py-2 text-xs font-medium text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_6px_16px_-6px_rgba(79,70,229,0.5)]"
           >
             <Eye className="h-3.5 w-3.5" />
             Voir
           </button>
           <button
             onClick={() => navigate(`/project/${project.id}/edit`)}
-            className="btn-mac inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white/70 px-3 py-2 text-xs font-medium text-gray-600 transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6] hover:text-gray-900"
+            className="btn-mac inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white/70 px-3 py-2 text-xs font-medium text-gray-600 transition-all hover:border-[#a5b4fc] hover:bg-[#eef2ff] hover:text-gray-900"
           >
             <Pencil className="h-3.5 w-3.5" />
             Modifier

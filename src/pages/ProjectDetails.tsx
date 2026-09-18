@@ -17,6 +17,7 @@ import {
   Clock,
   FileText,
   Plus,
+  Files,
   ArrowRightLeft,
   Pause,
   CheckCircle2,
@@ -27,19 +28,18 @@ import {
 import { getProject, deleteProject } from '@/services/projects'
 import { getCreatives, updateCreativeMetadata, deleteCreative } from '@/services/creatives'
 import type { Project, ProjectStatus, HistoryEntry } from '@/types/project'
-import type { Creative, CreativeMetadataInput } from '@/types/creative'
+import type { Creative } from '@/types/creative'
 import { STATUS_LABELS, PRIORITY_LABELS_SHORT, PRIORITY_COLORS } from '@/types/project'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Toast } from '@/components/Toast'
 import { ProjectDetailsSkeleton } from '@/components/Skeleton'
-import { CreativeSection } from '@/components/CreativeSection'
-import { CreativeUploadModal } from '@/components/CreativeUploadModal'
-import { CreativeFormModal } from '@/components/CreativeFormModal'
-import { CreativeDetailModal } from '@/components/CreativeDetailModal'
-import { Palette } from 'lucide-react'
+import { FileSection } from '@/components/FileSection'
+import { FileUploadModal } from '@/components/FileUploadModal'
+import { FileFormModal, type FileMetadataForm } from '@/components/FileFormModal'
+import { FileDetailModal } from '@/components/FileDetailModal'
 import { useAuth } from '@/hooks/useAuth'
 
-const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #f8fafc 0%, #f8fafc 50%, #eef2ff 100%)'
 
 /* ===== PREMIUM STATUS STYLES (light) ===== */
 
@@ -47,23 +47,23 @@ const STATUS_BADGE: Record<ProjectStatus, { ring: string; dot: string }> = {
   a_faire: { ring: 'bg-red-50 text-red-600 ring-1 ring-red-200', dot: 'bg-red-500' },
   en_cours: { ring: 'bg-amber-50 text-amber-600 ring-1 ring-amber-200', dot: 'bg-amber-500' },
   en_pause: { ring: 'bg-orange-50 text-orange-600 ring-1 ring-orange-200', dot: 'bg-orange-500' },
-  termine: { ring: 'bg-[#faf0f9] text-[#421f40] ring-1 ring-[#dfb9da]', dot: 'bg-[#fb9b8a]' },
+  termine: { ring: 'bg-[#eef2ff] text-[#4338ca] ring-1 ring-[#c7d2fe]', dot: 'bg-[#a78bfa]' },
 }
 
 const RING_GRADIENTS: Record<ProjectStatus, [string, string, string]> = {
   a_faire: ['#94a3b8', '#cbd5e1', '#94a3b8'],
-  en_cours: ['#542a52', '#8b4f86', '#fb9b8a'],
+  en_cours: ['#4f46e5', '#8b5cf6', '#a78bfa'],
   en_pause: ['#ef8672', '#f6b09a', '#ef8672'],
-  termine: ['#fb9b8a', '#fdaa9b', '#fb9b8a'],
+  termine: ['#a78bfa', '#c4b5fd', '#a78bfa'],
 }
 
 /* ===== HISTORY ===== */
 
 const ACTION_STYLES: Record<string, { icon: typeof Clock; tone: string }> = {
   created: { icon: Plus, tone: 'text-emerald-600' },
-  edited: { icon: Pencil, tone: 'text-[#f2836f]' },
+  edited: { icon: Pencil, tone: 'text-[#818cf8]' },
   status_changed: { icon: ArrowRightLeft, tone: 'text-amber-600' },
-  progress_updated: { icon: ArrowRightLeft, tone: 'text-[#542a52]' },
+  progress_updated: { icon: ArrowRightLeft, tone: 'text-[#4f46e5]' },
   paused: { icon: Pause, tone: 'text-orange-600' },
   completed: { icon: CheckCircle2, tone: 'text-green-600' },
   deleted: { icon: Trash2, tone: 'text-red-600' },
@@ -111,21 +111,21 @@ function AmbientBackground() {
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
         className="animate-blob absolute -left-40 top-[-10%] h-[500px] w-[500px] opacity-25 blur-3xl"
-        style={{ background: 'linear-gradient(135deg, #fdd9d0, #cfa3c8)' }}
+        style={{ background: 'linear-gradient(135deg, #dbeafe, #a5b4fc)' }}
       />
       <div
         className="animate-blob absolute -right-32 top-[30%] h-[420px] w-[420px] opacity-20 blur-3xl"
-        style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
+        style={{ background: 'linear-gradient(135deg, #e0e7ff, #bfdbfe)', animationDelay: '2s' }}
       />
       <div
         className="animate-blob absolute bottom-[-15%] left-[30%] h-[360px] w-[360px] opacity-20 blur-3xl"
-        style={{ background: 'linear-gradient(135deg, #f6cfe9, #eab4de)', animationDelay: '4s' }}
+        style={{ background: 'linear-gradient(135deg, #ddd6fe, #c4b5fd)', animationDelay: '4s' }}
       />
       <div
         className="absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(84,42,82,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.05) 1px, transparent 1px)',
+            'linear-gradient(rgba(79,70,229,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.05) 1px, transparent 1px)',
           backgroundSize: '50px 50px',
         }}
       />
@@ -147,7 +147,7 @@ function GlassCard({
       className={`animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-7 ${className}`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#4f46e5]/40 to-transparent" />
       {children}
     </div>
   )
@@ -178,7 +178,7 @@ function SectionTitle({
 function Chip({ icon: Icon, text }: { icon: typeof Clock; text: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white/70 px-3 py-1.5 text-xs text-gray-600 backdrop-blur-sm">
-      <Icon className="h-3.5 w-3.5 text-[#542a52]/80" />
+      <Icon className="h-3.5 w-3.5 text-[#4f46e5]/80" />
       {text}
     </span>
   )
@@ -194,7 +194,7 @@ function ProgressRing({ progress, status }: { progress: number; status: ProjectS
 
   return (
     <div className="relative flex h-40 w-40 shrink-0 items-center justify-center">
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#fdd9d0]/70 to-[#ecd2e9]/60 blur-2xl" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#dbeafe]/70 to-[#e0e7ff]/60 blur-2xl" />
       <svg viewBox="0 0 128 128" className="relative h-40 w-40 -rotate-90">
         <defs>
           <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -203,7 +203,7 @@ function ProgressRing({ progress, status }: { progress: number; status: ProjectS
             <stop offset="100%" stopColor={c3} />
           </linearGradient>
         </defs>
-        <circle cx="64" cy="64" r={radius} fill="none" stroke="rgba(84,42,82,0.15)" strokeWidth="10" />
+        <circle cx="64" cy="64" r={radius} fill="none" stroke="rgba(79,70,229,0.15)" strokeWidth="10" />
         <circle
           cx="64"
           cy="64"
@@ -245,13 +245,13 @@ export function ProjectDetails() {
   const [deleting, setDeleting] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
-  // ===== Creatives state =====
-  const [creatives, setCreatives] = useState<Creative[]>([])
+  // ===== Fichiers state =====
+  const [files, setFiles] = useState<Creative[]>([])
   const [uploadOpen, setUploadOpen] = useState(false)
   const [editTarget, setEditTarget] = useState<Creative | null>(null)
   const [detailTarget, setDetailTarget] = useState<Creative | null>(null)
-  const [creativeDeleteTarget, setCreativeDeleteTarget] = useState<Creative | null>(null)
-  const [creativeBusy, setCreativeBusy] = useState(false)
+  const [fileDeleteTarget, setFileDeleteTarget] = useState<Creative | null>(null)
+  const [fileBusy, setFileBusy] = useState(false)
 
   function togglePassword(credId: string) {
     setShownPasswords((prev) => ({ ...prev, [credId]: !prev[credId] }))
@@ -281,41 +281,45 @@ export function ProjectDetails() {
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false))
     getCreatives(id)
-      .then(setCreatives)
-      .catch(() => {}) // creatives are optional; the page still renders
+      .then(setFiles)
+      .catch(() => {}) // files are optional; the page still renders
   }, [id])
 
-  // ===== Creatives handlers =====
-  async function handleCreativeEditSubmit(metadata: CreativeMetadataInput) {
+  // ===== Files handlers =====
+  async function handleFileEditSubmit(form: FileMetadataForm) {
     if (!editTarget) return
-    setCreativeBusy(true)
+    setFileBusy(true)
     try {
-      const updated = await updateCreativeMetadata(editTarget.id, metadata)
-      setCreatives((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+      const updated = await updateCreativeMetadata(editTarget.id, {
+        title: form.title,
+        caption: form.description,
+        notes: form.notes,
+      })
+      setFiles((prev) => prev.map((f) => (f.id === updated.id ? updated : f)))
       setEditTarget(null)
       setDetailTarget((prev) => (prev && prev.id === updated.id ? updated : prev))
-      setToast({ message: 'Creative mise à jour.', type: 'success' })
+      setToast({ message: 'Fichier mis à jour.', type: 'success' })
     } catch (err) {
       throw err // let the form modal display the error
     } finally {
-      setCreativeBusy(false)
+      setFileBusy(false)
     }
   }
 
-  async function handleCreativeDelete() {
-    if (!creativeDeleteTarget) return
-    setCreativeBusy(true)
+  async function handleFileDelete() {
+    if (!fileDeleteTarget) return
+    setFileBusy(true)
     try {
-      await deleteCreative(creativeDeleteTarget)
-      setCreatives((prev) => prev.filter((c) => c.id !== creativeDeleteTarget.id))
-      setDetailTarget((prev) => (prev && prev.id === creativeDeleteTarget.id ? null : prev))
-      setCreativeDeleteTarget(null)
-      setToast({ message: 'Creative supprimée.', type: 'success' })
+      await deleteCreative(fileDeleteTarget)
+      setFiles((prev) => prev.filter((f) => f.id !== fileDeleteTarget.id))
+      setDetailTarget((prev) => (prev && prev.id === fileDeleteTarget.id ? null : prev))
+      setFileDeleteTarget(null)
+      setToast({ message: 'Fichier supprimé.', type: 'success' })
     } catch {
       // Storage or DB failed: warn instead of silently keeping an inconsistent state (spec #26)
       setToast({ message: 'Impossible de supprimer le fichier. Réessayez.', type: 'error' })
     } finally {
-      setCreativeBusy(false)
+      setFileBusy(false)
     }
   }
 
@@ -342,7 +346,7 @@ export function ProjectDetails() {
         <AmbientBackground />
         <div className="relative z-10 mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 text-center sm:px-6">
           <div className="animate-scale-in mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-xl">
-            <AlertCircle className="h-10 w-10 text-[#542a52]/70" />
+            <AlertCircle className="h-10 w-10 text-[#4f46e5]/70" />
           </div>
           <h2 className="animate-slide-up mb-2 text-2xl font-bold text-gray-900">Projet introuvable</h2>
           <p className="animate-slide-up mb-8 text-sm text-gray-500" style={{ animationDelay: '40ms' }}>
@@ -350,7 +354,7 @@ export function ProjectDetails() {
           </p>
           <button
             onClick={() => navigate('/dashboard')}
-            className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
+            className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#4338ca] hover:to-[#7c3aed]"
             style={{ animationDelay: '80ms' }}
           >
             <ArrowLeft className="h-4 w-4" />
@@ -376,7 +380,7 @@ export function ProjectDetails() {
         <div className="animate-slide-up pt-6">
           <button
             onClick={() => navigate('/dashboard')}
-            className="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6] hover:text-gray-900"
+            className="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#a5b4fc] hover:bg-[#eef2ff] hover:text-gray-900"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             Retour aux projets
@@ -387,8 +391,8 @@ export function ProjectDetails() {
         <div
           className="animate-card-enter relative mt-4 overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-8"
         >
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/60 to-transparent" />
-          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-[#fdd9d0]/70 to-[#ecd2e9]/50 blur-3xl" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#4f46e5]/60 to-transparent" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-[#dbeafe]/70 to-[#e0e7ff]/50 blur-3xl" />
 
           <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
@@ -420,7 +424,7 @@ export function ProjectDetails() {
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full bg-[#f7ecf6] px-2.5 py-1 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]"
+                      className="rounded-full bg-[#eef2ff] px-2.5 py-1 text-xs font-medium text-[#4f46e5] ring-1 ring-[#c7d2fe]"
                     >
                       {tech}
                     </span>
@@ -439,13 +443,13 @@ export function ProjectDetails() {
           <div className="space-y-6 lg:col-span-2">
             {/* Links */}
             <GlassCard delay={50}>
-              <SectionTitle icon={Link2} title="Liens du projet" tone="text-[#f2836f]" />
+              <SectionTitle icon={Link2} title="Liens du projet" tone="text-[#818cf8]" />
               {(project.links ?? []).length > 0 ? (
                 <ul className="space-y-2.5">
                   {(project.links ?? []).map((link) => (
                     <li
                       key={link.id}
-                      className="group flex items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-white/60 px-4 py-3 transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6]/50"
+                      className="group flex items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-white/60 px-4 py-3 transition-all hover:border-[#a5b4fc] hover:bg-[#eef2ff]/50"
                     >
                       <div className="flex min-w-0 items-center gap-3">
                         <span className="icon-tile flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
@@ -455,7 +459,7 @@ export function ProjectDetails() {
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="truncate text-sm text-[#f2836f] transition-colors hover:text-[#421f40] hover:underline"
+                          className="truncate text-sm text-[#818cf8] transition-colors hover:text-[#4338ca] hover:underline"
                         >
                           {link.url}
                         </a>
@@ -492,16 +496,16 @@ export function ProjectDetails() {
 
             {/* Credentials vault */}
             <GlassCard delay={80}>
-              <SectionTitle icon={KeyRound} title="Identifiants admin" tone="text-[#542a52]" />
+              <SectionTitle icon={KeyRound} title="Identifiants admin" tone="text-[#4f46e5]" />
               {(project.credentials ?? []).length > 0 ? (
                 <ul className="space-y-3">
                   {(project.credentials ?? []).map((cred, index) => (
                     <li
                       key={cred.id}
-                      className="rounded-2xl border border-gray-100 bg-white/60 p-4 transition-all hover:border-[#cfa3c8]/60"
+                      className="rounded-2xl border border-gray-100 bg-white/60 p-4 transition-all hover:border-[#a5b4fc]/60"
                     >
                       {(project.credentials?.length ?? 0) > 1 && (
-                        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#542a52]/70">
+                        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#4f46e5]/70">
                           Accès {index + 1}
                         </p>
                       )}
@@ -575,7 +579,7 @@ export function ProjectDetails() {
 
             {/* Description */}
             <GlassCard delay={110}>
-              <SectionTitle icon={FileText} title="Description" tone="text-[#542a52]" />
+              <SectionTitle icon={FileText} title="Description" tone="text-[#4f46e5]" />
               <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-600">
                 {project.description || 'Aucune description.'}
               </p>
@@ -586,11 +590,11 @@ export function ProjectDetails() {
           <div className="space-y-6">
             {/* Actions */}
             <GlassCard delay={140}>
-              <SectionTitle icon={Pencil} title="Actions" tone="text-[#542a52]" />
+              <SectionTitle icon={Pencil} title="Actions" tone="text-[#4f46e5]" />
               <div className="space-y-3">
                 <button
                   onClick={() => navigate(`/project/${project.id}/edit`)}
-                  className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)]"
+                  className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_10px_22px_-8px_rgba(79,70,229,0.45)]"
                 >
                   <Pencil className="h-4 w-4" />
                   Modifier le projet
@@ -615,7 +619,7 @@ export function ProjectDetails() {
 
             {/* Dates */}
             <GlassCard delay={170}>
-              <SectionTitle icon={Calendar} title="Chronologie" tone="text-[#f2836f]" />
+              <SectionTitle icon={Calendar} title="Chronologie" tone="text-[#818cf8]" />
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs text-gray-400">Date de début</span>
@@ -631,35 +635,35 @@ export function ProjectDetails() {
           </div>
         </div>
 
-        {/* ===== Creatives ===== */}
+        {/* ===== Fichiers ===== */}
         <GlassCard delay={190} className="mt-6">
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="icon-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-[#f2836f]">
-                <Palette className="h-4 w-4" />
+              <span className="icon-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-indigo-600">
+                <Files className="h-4 w-4" />
               </span>
               <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-                Creatives
+                Fichiers
               </h3>
-              {creatives.length > 0 && (
-                <span className="rounded-full bg-[#f7ecf6] px-2 py-0.5 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]">
-                  {creatives.length}
+              {files.length > 0 && (
+                <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700 ring-1 ring-indigo-200">
+                  {files.length}
                 </span>
               )}
             </div>
             <button
               onClick={() => setUploadOpen(true)}
-              className="btn-mac inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
+              className="btn-mac inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#4338ca] hover:to-[#7c3aed]"
             >
               <Plus className="h-3.5 w-3.5" />
-              Ajouter une creative
+              Ajouter un fichier
             </button>
           </div>
 
-          <CreativeSection
-            creatives={creatives}
+          <FileSection
+            files={files}
             onEdit={setEditTarget}
-            onDelete={setCreativeDeleteTarget}
+            onDelete={setFileDeleteTarget}
             onOpen={setDetailTarget}
             onAdd={() => setUploadOpen(true)}
           />
@@ -667,7 +671,7 @@ export function ProjectDetails() {
 
         {/* ===== History ===== */}
         <GlassCard delay={200} className="mt-6">
-          <SectionTitle icon={History} title="Historique" tone="text-[#542a52]" />
+          <SectionTitle icon={History} title="Historique" tone="text-[#4f46e5]" />
           {sortedHistory.length === 0 ? (
             <div className="py-8 text-center">
               <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300" />
@@ -688,7 +692,7 @@ export function ProjectDetails() {
                           <Icon className="h-3.5 w-3.5" />
                         </span>
                         {!isLast && (
-                          <span className="w-px flex-1 bg-gradient-to-b from-[#fdd9d0] to-transparent" />
+                          <span className="w-px flex-1 bg-gradient-to-b from-[#dbeafe] to-transparent" />
                         )}
                       </div>
                       <div className={`min-w-0 pt-1 ${isLast ? 'pb-1' : 'pb-6'}`}>
@@ -715,45 +719,45 @@ export function ProjectDetails() {
         loading={deleting}
       />
 
-      {/* ===== Creatives modals ===== */}
+      {/* ===== Files modals ===== */}
       {project && user && (
-        <CreativeUploadModal
+        <FileUploadModal
           isOpen={uploadOpen}
           projectId={project.id}
           userId={user.id}
           onClose={() => setUploadOpen(false)}
-          onCreated={(creative) => {
-            setCreatives((prev) => [creative, ...prev])
-            setToast({ message: 'Creative ajoutée !', type: 'success' })
+          onCreated={(f) => {
+            setFiles((prev) => [f, ...prev])
+            setToast({ message: 'Fichier ajouté !', type: 'success' })
           }}
           onError={(message) => setToast({ message, type: 'error' })}
         />
       )}
-      <CreativeFormModal
+      <FileFormModal
         isOpen={!!editTarget}
         initialData={editTarget}
-        loading={creativeBusy}
+        loading={fileBusy}
         onClose={() => setEditTarget(null)}
-        onSubmit={handleCreativeEditSubmit}
+        onSubmit={handleFileEditSubmit}
       />
-      <CreativeDetailModal
-        creative={detailTarget}
+      <FileDetailModal
+        file={detailTarget}
         onClose={() => setDetailTarget(null)}
-        onEdit={(c) => {
+        onEdit={(f) => {
           setDetailTarget(null)
-          setEditTarget(c)
+          setEditTarget(f)
         }}
-        onDelete={(c) => setCreativeDeleteTarget(c)}
+        onDelete={(f) => setFileDeleteTarget(f)}
       />
       <ConfirmDialog
-        isOpen={!!creativeDeleteTarget}
-        title="Supprimer cette creative ?"
-        message={`« ${creativeDeleteTarget?.title ?? ''} » et son fichier seront définitivement supprimés.`}
+        isOpen={!!fileDeleteTarget}
+        title="Supprimer ce fichier ?"
+        message={`« ${fileDeleteTarget?.title ?? ''} » et son contenu seront définitivement supprimés.`}
         confirmLabel="Supprimer"
         cancelLabel="Annuler"
-        onConfirm={handleCreativeDelete}
-        onCancel={() => setCreativeDeleteTarget(null)}
-        loading={creativeBusy}
+        onConfirm={handleFileDelete}
+        onCancel={() => setFileDeleteTarget(null)}
+        loading={fileBusy}
       />
 
       {toast && (

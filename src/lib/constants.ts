@@ -11,6 +11,90 @@ export const CREATIVE_EXTENSIONS = [...CREATIVE_IMAGE_EXTENSIONS, ...CREATIVE_VI
 
 export const DOCUMENT_EXTENSIONS = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt'] as const
 
+/* ===== Fichiers (espace de partage) ===== */
+
+export type FileCategory =
+  | 'pdf'
+  | 'word'
+  | 'powerpoint'
+  | 'image'
+  | 'audio'
+  | 'text'
+  | 'note'
+  | 'video'
+  | 'autre'
+
+export const FILE_SHARING_EXTENSIONS = [
+  'pdf',
+  'doc',
+  'docx',
+  'ppt',
+  'pptx',
+  'txt',
+  'md',
+  'jpg',
+  'jpeg',
+  'png',
+  'webp',
+  'gif',
+  'mp3',
+  'wav',
+  'ogg',
+  'm4a',
+  'mp4',
+  'mov',
+] as const
+
+export const FILE_ACCEPT_LABEL = 'PDF • Word • PowerPoint • Image • Audio • Texte • Vidéo'
+
+/** Category from a file extension (or full file name). Notes are .txt created in-app. */
+export function getFileCategory(fileNameOrExt: string): FileCategory {
+  const ext = fileNameOrExt.includes('.')
+    ? getFileExtension(fileNameOrExt)
+    : fileNameOrExt.toLowerCase()
+  switch (ext) {
+    case 'pdf':
+      return 'pdf'
+    case 'doc':
+    case 'docx':
+      return 'word'
+    case 'ppt':
+    case 'pptx':
+      return 'powerpoint'
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'webp':
+    case 'gif':
+      return 'image'
+    case 'mp3':
+    case 'wav':
+    case 'ogg':
+    case 'm4a':
+      return 'audio'
+    case 'txt':
+    case 'md':
+      return 'text'
+    case 'mp4':
+    case 'mov':
+      return 'video'
+    default:
+      return 'autre'
+  }
+}
+
+export const FILE_CATEGORY_LABELS: Record<FileCategory, string> = {
+  pdf: 'PDF',
+  word: 'Word',
+  powerpoint: 'PowerPoint',
+  image: 'Image',
+  audio: 'Audio',
+  text: 'Texte',
+  note: 'Note',
+  video: 'Vidéo',
+  autre: 'Autre',
+}
+
 export function getFileExtension(fileName: string): string {
   const parts = fileName.toLowerCase().split('.')
   return parts.length > 1 ? parts[parts.length - 1] : ''

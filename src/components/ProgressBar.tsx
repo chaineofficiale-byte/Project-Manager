@@ -9,16 +9,16 @@ interface ProgressBarProps {
 
 const STATUS_BAR_COLORS: Record<ProjectStatus, string> = {
   a_faire: 'from-gray-400 to-gray-500',
-  en_cours: 'from-[#542a52] via-[#6d3a69] to-[#fb9b8a]',
+  en_cours: 'from-[#4f46e5] via-[#8b5cf6] to-[#a78bfa]',
   en_pause: 'from-gray-400 to-gray-400',
-  termine: 'from-[#fb9b8a] to-[#f2836f]',
+  termine: 'from-[#a78bfa] to-[#818cf8]',
 }
 
 const TRACK_BG: Record<ProjectStatus, string> = {
   a_faire: 'bg-gray-100',
-  en_cours: 'bg-[#f0dfef]',
+  en_cours: 'bg-[#e0e7ff]',
   en_pause: 'bg-gray-100',
-  termine: 'bg-[#f6e3f4]',
+  termine: 'bg-[#e0e7ff]',
 }
 
 const SIZE_MAP = {
@@ -43,7 +43,7 @@ export function ProgressBar({ progress, status, showLabel = true, size = 'md' }:
           </span>
           <span
             className={`text-xs font-bold ${
-              isDone ? 'text-[#542a52]' : isPaused ? 'text-gray-500' : 'text-[#542a52]'
+              isDone ? 'text-[#4f46e5]' : isPaused ? 'text-gray-500' : 'text-[#4f46e5]'
             }`}
           >
             {clampedProgress}%

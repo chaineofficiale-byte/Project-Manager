@@ -25,7 +25,7 @@ function FloatingOrb({ delay, size, x, y, color }: { delay: string; size: string
 function Particle({ delay, x, y }: { delay: string; x: string; y: string }) {
   return (
     <div
-      className="animate-float absolute h-1.5 w-1.5 rounded-full bg-[#542a52]/30"
+      className="animate-float absolute h-1.5 w-1.5 rounded-full bg-[#4f46e5]/30"
       style={{ left: x, top: y, animationDelay: delay }}
     />
   )
@@ -115,14 +115,14 @@ export function Login() {
   }
 
   return (
-    <div className="relative flex min-h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)' }}>
+    <div className="relative flex min-h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #f8fafc 50%, #eef2ff 100%)' }}>
       {/* ===== LEFT SIDE - Animated Background ===== */}
       <div className="pointer-events-none relative hidden w-1/2 lg:block">
         {/* Gradient orbs */}
-        <FloatingOrb delay="0s" size="400px" x="-10%" y="10%" color="linear-gradient(135deg, #fdd9d0, #cfa3c8)" />
-        <FloatingOrb delay="2s" size="350px" x="60%" y="60%" color="linear-gradient(135deg, #ecd2e9, #f8c5ba)" />
-        <FloatingOrb delay="4s" size="300px" x="30%" y="30%" color="linear-gradient(135deg, #f6cfe9, #eab4de)" />
-        <FloatingOrb delay="1s" size="200px" x="70%" y="15%" color="linear-gradient(135deg, #fdd9d0, #f2836f)" />
+        <FloatingOrb delay="0s" size="400px" x="-10%" y="10%" color="linear-gradient(135deg, #dbeafe, #a5b4fc)" />
+        <FloatingOrb delay="2s" size="350px" x="60%" y="60%" color="linear-gradient(135deg, #e0e7ff, #bfdbfe)" />
+        <FloatingOrb delay="4s" size="300px" x="30%" y="30%" color="linear-gradient(135deg, #ddd6fe, #c4b5fd)" />
+        <FloatingOrb delay="1s" size="200px" x="70%" y="15%" color="linear-gradient(135deg, #dbeafe, #818cf8)" />
 
         {/* Particles */}
         {Array.from({ length: 20 }).map((_, i) => (
@@ -136,7 +136,7 @@ export function Login() {
 
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-[0.35]" style={{
-          backgroundImage: 'linear-gradient(rgba(84,42,82,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.06) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(79,70,229,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.06) 1px, transparent 1px)',
           backgroundSize: '50px 50px',
         }} />
 
@@ -149,12 +149,12 @@ export function Login() {
                 alt="Project Manager"
                 className="h-12 w-12 rounded-2xl shadow-md shadow-slate-900/15"
               />
-              <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
+              <span className="text-sm font-semibold uppercase tracking-widest text-[#4f46e5]/70">Project Manager</span>
             </div>
 
             <h2 className="mb-4 text-5xl font-bold leading-tight text-gray-900 xl:text-6xl">
               Gérez vos projets<br />
-              <span className="bg-gradient-to-r from-[#542a52] via-[#6d3a69] to-[#fb9b8a] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#4f46e5] via-[#8b5cf6] to-[#a78bfa] bg-clip-text text-transparent">
                 avec élégance.
               </span>
             </h2>
@@ -166,9 +166,9 @@ export function Login() {
             {/* Feature cards */}
             <div className="space-y-3">
               {[
-                { icon: Shield, text: 'Chiffrement de bout en bout', color: 'text-[#f2836f]' },
-                { icon: Globe, text: 'Accès depuis n\'importe où', color: 'text-[#f2836f]' },
-                { icon: Zap, text: 'Ultra rapide et réactif', color: 'text-[#542a52]' },
+                { icon: Shield, text: 'Chiffrement de bout en bout', color: 'text-[#818cf8]' },
+                { icon: Globe, text: 'Accès depuis n\'importe où', color: 'text-[#818cf8]' },
+                { icon: Zap, text: 'Ultra rapide et réactif', color: 'text-[#4f46e5]' },
               ].map(({ icon: Icon, text, color }, i) => (
                 <div
                   key={text}
@@ -196,7 +196,7 @@ export function Login() {
               alt="Project Manager"
               className="mx-auto mb-3 h-14 w-14 rounded-2xl shadow-md shadow-slate-900/15"
             />
-            <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
+            <span className="text-sm font-semibold uppercase tracking-widest text-[#4f46e5]/70">Project Manager</span>
           </div>
 
           {/* Form card */}
@@ -212,7 +212,7 @@ export function Login() {
                 </div>
                 <h1 className="mb-2 text-2xl font-bold text-gray-900">Vérifiez votre boîte mail 📬</h1>
                 <p className="mb-6 text-sm text-gray-500">
-                  Un lien de confirmation a été envoyé à <span className="font-medium text-[#542a52]">{email}</span>.
+                  Un lien de confirmation a été envoyé à <span className="font-medium text-[#4f46e5]">{email}</span>.
                   Confirmez votre email puis connectez-vous.
                 </p>
                 <button
@@ -257,11 +257,11 @@ export function Login() {
                 </label>
                 <div className={`group relative rounded-xl border transition-all duration-300 ${
                   focusedField === 'email'
-                    ? 'border-[#542a52] bg-white shadow-lg shadow-[#542a52]/10'
+                    ? 'border-[#4f46e5] bg-white shadow-lg shadow-[#4f46e5]/10'
                     : 'border-gray-200 bg-white/70 hover:border-gray-300'
                 }`}>
                   <Mail className={`absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
-                    focusedField === 'email' ? 'text-[#542a52]' : 'text-gray-400'
+                    focusedField === 'email' ? 'text-[#4f46e5]' : 'text-gray-400'
                   }`} />
                   <input
                     type="email"
@@ -284,11 +284,11 @@ export function Login() {
                 </label>
                 <div className={`group relative rounded-xl border transition-all duration-300 ${
                   focusedField === 'password'
-                    ? 'border-[#542a52] bg-white shadow-lg shadow-[#542a52]/10'
+                    ? 'border-[#4f46e5] bg-white shadow-lg shadow-[#4f46e5]/10'
                     : 'border-gray-200 bg-white/70 hover:border-gray-300'
                 }`}>
                   <Lock className={`absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
-                    focusedField === 'password' ? 'text-[#542a52]' : 'text-gray-400'
+                    focusedField === 'password' ? 'text-[#4f46e5]' : 'text-gray-400'
                   }`} />
                   <input
                     type={showPassword ? 'text' : 'password'}
@@ -319,7 +319,7 @@ export function Login() {
                     id="remember-me"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-[#542a52] focus:ring-[#542a52]"
+                    className="h-4 w-4 rounded border-gray-300 text-[#4f46e5] focus:ring-[#4f46e5]"
                   />
                   <label htmlFor="remember-me" className="cursor-pointer select-none text-sm text-gray-500 transition-colors hover:text-gray-700">
                     Se souvenir de moi
@@ -328,7 +328,7 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => navigate('/forgot-password')}
-                  className="text-sm text-[#542a52] transition-colors hover:text-[#6d3a69] hover:underline"
+                  className="text-sm text-[#4f46e5] transition-colors hover:text-[#8b5cf6] hover:underline"
                 >
                   Mot de passe oublié ?
                 </button>
@@ -339,7 +339,7 @@ export function Login() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group/btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)] disabled:opacity-50"
+                  className="group/btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-4 py-3.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_10px_22px_-8px_rgba(79,70,229,0.45)] disabled:opacity-50"
                 >
                   {submitting ? (
                     <>

@@ -21,9 +21,20 @@ npm install
 
 1. Créez un compte sur [Supabase](https://supabase.com)
 2. Créez un nouveau projet
-3. Allez dans **SQL Editor** et exécutez le contenu du fichier `supabase-setup.sql`
-4. Créez un compte admin dans **Authentication > Users > Add user**
+3. Allez dans **SQL Editor** et exécutez le contenu des fichiers SQL dans cet ordre :
+   1. `supabase-setup.sql` — table `projects` + RLS de base
+   2. `supabase-v3-migration.sql` — créatives & documents + Storage
+   3. `supabase-v3-phase5.sql` — priorité + technologies
+   4. `supabase-v3-standalone-creatives.sql` — créatives sans projet
+   5. `supabase-shared-users.sql` — **partage des projets entre utilisateurs**
+4. Créez des comptes dans **Authentication > Users > Add user** (ou via la page de connexion)
 5. Copiez votre **Project URL** et **Anon Key** dans les variables d'environnement
+
+> ℹ️ **Partage entre comptes** : par défaut, tout utilisateur connecté voit
+> **tous** les projets (et leurs fichiers). C'est le rôle du fichier
+> `supabase-shared-users.sql`. Sans lui, un nouveau compte ne verrait rien
+> car les politiques V3 restreignaient chaque donnée à son propriétaire
+> (`user_id = auth.uid()`).
 
 ## Variables d'environnement
 

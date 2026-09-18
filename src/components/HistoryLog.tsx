@@ -29,9 +29,9 @@ function formatDate(dateStr: string): string {
 
 const ACTION_CONFIG: Record<string, { icon: typeof Clock; color: string }> = {
   created: { icon: Plus, color: 'text-emerald-600' },
-  edited: { icon: Pencil, color: 'text-[#f2836f]' },
+  edited: { icon: Pencil, color: 'text-[#818cf8]' },
   status_changed: { icon: ArrowRightLeft, color: 'text-amber-600' },
-  progress_updated: { icon: ArrowRightLeft, color: 'text-[#542a52]' },
+  progress_updated: { icon: ArrowRightLeft, color: 'text-[#4f46e5]' },
   paused: { icon: Pause, color: 'text-orange-600' },
   completed: { icon: CheckCircle, color: 'text-green-600' },
   deleted: { icon: Trash2, color: 'text-red-600' },
@@ -57,7 +57,7 @@ export function HistoryLog({ history }: HistoryLogProps) {
   return (
     <div className="relative">
       {/* Timeline line */}
-      <div className="absolute left-[15px] top-3 bottom-3 w-px bg-gradient-to-b from-[#fdd9d0] via-[#f0dfef] to-transparent" />
+      <div className="absolute left-[15px] top-3 bottom-3 w-px bg-gradient-to-b from-[#dbeafe] via-[#e0e7ff] to-transparent" />
 
       <ul className="space-y-1">
         {sorted.map((entry, index) => {

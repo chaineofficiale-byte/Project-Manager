@@ -6,14 +6,14 @@ import { Login } from '@/pages/Login'
 import { ForgotPassword } from '@/pages/ForgotPassword'
 import { ResetPassword } from '@/pages/ResetPassword'
 import { Dashboard } from '@/pages/Dashboard'
-import { Creatives } from '@/pages/Creatives'
+import { FilesPage } from '@/pages/Files'
 import { ProjectDetails } from '@/pages/ProjectDetails'
 import { NewProject } from '@/pages/NewProject'
 import { EditProject } from '@/pages/EditProject'
 import { Settings } from '@/pages/Settings'
 import { Skeleton } from '@/components/Skeleton'
 
-const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #eef2ff 100%)'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -89,17 +89,18 @@ export default function App() {
           }
         />
         <Route
-          path="/creatives"
+          path="/fichiers"
           element={
             <ProtectedRoute>
               <AppLayout>
                 <PageTransition>
-                  <Creatives />
+                  <FilesPage />
                 </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
         />
+        <Route path="/creatives" element={<Navigate to="/fichiers" replace />} />
         <Route
           path="/project/new"
           element={
