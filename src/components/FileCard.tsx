@@ -85,6 +85,16 @@ export function FileCard({ file, onEdit, onDelete, onOpen, projectName, showProj
     }
   }
 
+  async function handleVisualize(e: React.MouseEvent) {
+    e.stopPropagation()
+    try {
+      const signed = await getCreativeUrl(file.storage_path)
+      window.open(signed, '_blank', 'noopener')
+    } catch {
+      /* ignore */
+    }
+  }
+
   return (
     <div
       className="card-lift group cursor-pointer overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 shadow-lg shadow-slate-900/5 backdrop-blur-xl"
@@ -150,8 +160,8 @@ export function FileCard({ file, onEdit, onDelete, onOpen, projectName, showProj
           <span className="text-[11px] text-gray-400">{formatFileSize(file.file_size)}</span>
           <div className="flex items-center gap-1">
             <button
-              onClick={(e) => { e.stopPropagation(); onOpen(file) }}
-              title="Visualiser"
+              onClick={handleVisualize}
+              title="Visualiser dans un nouvel onglet"
               className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-indigo-50 hover:text-indigo-600"
             >
               <Eye className="h-3.5 w-3.5" />
