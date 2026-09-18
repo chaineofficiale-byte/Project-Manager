@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import type { Creative } from '@/types/creative'
+import { errorMessage } from '@/lib/constants'
 
 const INPUT_CLASS =
   'w-full rounded-xl border border-gray-200 bg-white/70 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 backdrop-blur-md transition-all focus:border-[#4f46e5] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4f46e5]/20'
@@ -53,7 +54,7 @@ export function FileFormModal({
     try {
       await onSubmit({ title: title.trim(), description, notes })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue.')
+      setError(errorMessage(err, 'Une erreur est survenue.'))
     }
   }
 

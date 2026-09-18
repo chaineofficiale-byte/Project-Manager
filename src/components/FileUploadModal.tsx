@@ -3,7 +3,7 @@ import { X, FileUp, CheckCircle2, FolderOpen, StickyNote, Pencil } from 'lucide-
 import { Dropzone } from './Dropzone'
 import { FileFormModal, type FileMetadataForm } from './FileFormModal'
 import { uploadCreativeFile, insertCreativeMetadata } from '@/services/creatives'
-import { FILE_ACCEPT_LABEL, FILE_SHARING_EXTENSIONS, formatFileSize, validateFile } from '@/lib/constants'
+import { FILE_ACCEPT_LABEL, FILE_SHARING_EXTENSIONS, errorMessage, formatFileSize, validateFile } from '@/lib/constants'
 import type { Creative } from '@/types/creative'
 import type { Project } from '@/types/project'
 
@@ -90,7 +90,7 @@ export function FileUploadModal({
         throw dbError
       }
     } catch (err) {
-      onError(err instanceof Error ? err.message : 'Impossible d’envoyer le fichier.')
+      onError(errorMessage(err, 'Impossible d’envoyer le fichier.'))
     } finally {
       reset()
       onClose()

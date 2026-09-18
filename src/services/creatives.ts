@@ -62,6 +62,27 @@ export interface UploadCreativeResult {
 }
 
 /**
+ * Storage object keys go through the URL path untouched: spaces, accents,
+ * parentheses, `#`, `?`... in the original file name make Supabase answer
+ * HTTP 400. We keep the ORIGINAL name in the `file_name` column (display +
+ * download name) but store a sanitized, URL-safe name in the bucket.
+ */
+export function sanitizeStorageName(name: string): string {
+  const dot = name.lastIndexOf('.')
+  const rawBase = dot > 0 ? name.slice(0, dot) : name
+  const ext = dot > 0 ? name.slice(dot).toLowerCase() : ''
+  const base =
+    rawBase
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9._-]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 80) || 'fichier'
+  return `${base}${ext}`
+}
+
+/**
  * Step 1 of 2: upload the binary to Storage and return the storage path.
  * The DB row is inserted separately via `insertCreativeMetadata`.
  * Pass `projectId = null` for a standalone creative (no project).
@@ -73,7 +94,8 @@ export async function uploadCreativeFile(
   onProgress?: (percent: number) => void
 ): Promise<string> {
   const creativeId = crypto.randomUUID()
-  const storagePath = `${userId}/${projectId ?? STANDALONE_SEGMENT}/${creativeId}/${file.name}`
+  const safeName = sanitizeStorageName(file.name)
+  const storagePath = `${userId}/${projectId ?? STANDALONE_SEGMENT}/${creativeId}/${safeName}`
 
   return new Promise<string>((resolve, reject) => {
     // supabase-js upload() has no progress callback; use the underlying XHR.
@@ -185,7 +207,7 @@ export async function replaceCreativeFile(
 ): Promise<void> {
   const parts = creative.storage_path.split('/')
   parts.pop()
-  const storagePath = `${parts.join('/')}/${file.name}`
+  const storagePath = `${parts.join('/')}/${sanitizeStorageName(file.name)}`
 
   await new Promise<void>((resolve, reject) => {
     const url = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/${BUCKET}/${storagePath}`

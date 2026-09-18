@@ -179,3 +179,19 @@ export const PLATFORM_EMOJIS: Record<CreativePlatform, string> = {
   website: '🌐',
   autre: '🎨',
 }
+
+/**
+ * Extract a human-readable message from anything thrown.
+ * Supabase Postgrest errors are plain objects ({ message, ... }), NOT
+ * `instanceof Error` — a naive `err instanceof Error ? ... : fallback`
+ * swallows the real cause and always shows the generic fallback.
+ */
+export function errorMessage(err: unknown, fallback: string): string {
+  if (err instanceof Error && err.message) return err.message
+  if (typeof err === 'object' && err !== null && 'message' in err) {
+    const m = (err as { message: unknown }).message
+    if (typeof m === 'string' && m) return m
+  }
+  if (typeof err === 'string' && err) return err
+  return fallback
+}
