@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Search, FolderOpen, Sparkles, LayoutGrid, Zap, ArrowUpDown, Layers } from 'lucide-react'
+import { Plus, Search, FolderOpen, Sparkles, LayoutGrid, Zap, ArrowUpDown, Layers, Upload } from 'lucide-react'
 import { getProjects, deleteProject } from '@/services/projects'
 import type { Project, ProjectStatus, ProjectPriority } from '@/types/project'
 import { STATUS_LABELS, PRIORITY_LABELS_SHORT } from '@/types/project'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { ImportProjectsModal } from '@/components/ImportProjectsModal'
 import { Toast } from '@/components/Toast'
 import { DashboardSkeleton } from '@/components/Skeleton'
 
@@ -24,6 +25,7 @@ export function Dashboard() {
   const [sortKey, setSortKey] = useState<SortKey>('updated_at')
   const [deleteTarget, setDeleteTarget] = useState<Project | null>(null)
   const [deleting, setDeleting] = useState(false)
+  const [importOpen, setImportOpen] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
   const loadProjects = useCallback(async () => {
@@ -130,14 +132,22 @@ export function Dashboard() {
                     : 'Commencez par créer votre premier projet'}
                 </p>
               </div>
-              <button
-                onClick={() => navigate('/project/new')}
-                className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_10px_22px_-8px_rgba(79,70,229,0.45)]"
-                style={{ animationDelay: '120ms' }}
-              >
-                <Plus className="h-4 w-4" />
-                Ajouter un projet
-              </button>
+              <div className="animate-slide-up flex flex-col gap-2 sm:flex-row sm:items-center" style={{ animationDelay: '120ms' }}>
+                <button
+                  onClick={() => setImportOpen(true)}
+                  className="btn-mac inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm backdrop-blur-md transition-all hover:border-indigo-300 hover:bg-indigo-50/50 hover:text-gray-900"
+                >
+                  <Upload className="h-4 w-4" />
+                  Importer
+                </button>
+                <button
+                  onClick={() => navigate('/project/new')}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#4338ca] hover:to-[#7c3aed] hover:shadow-[0_10px_22px_-8px_rgba(79,70,229,0.45)]"
+                >
+                  <Plus className="h-4 w-4" />
+                  Ajouter un projet
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -280,6 +290,18 @@ export function Dashboard() {
         onConfirm={handleDelete}
         onCancel={() => setDeleteTarget(null)}
         loading={deleting}
+      />
+
+      {/* Bulk import */}
+      <ImportProjectsModal
+        isOpen={importOpen}
+        onClose={() => setImportOpen(false)}
+        onImported={(count) => {
+          setLoading(true)
+          void loadProjects().then(() =>
+            setToast({ message: `${count} projet${count > 1 ? 's' : ''} importé${count > 1 ? 's' : ''} !`, type: 'success' })
+          )
+        }}
       />
 
       {/* Toast */}
