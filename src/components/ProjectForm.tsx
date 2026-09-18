@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Eye, EyeOff, Plus, Trash2 } from 'lucide-react'
-import type { ProjectFormData, ProjectStatus } from '@/types/project'
-import { STATUS_LABELS } from '@/types/project'
+import { Eye, EyeOff, Plus, Trash2, X } from 'lucide-react'
+import type { ProjectFormData, ProjectStatus, ProjectPriority } from '@/types/project'
+import { STATUS_LABELS, PRIORITY_LABELS } from '@/types/project'
 import { ProgressBar } from './ProgressBar'
 
 interface ProjectFormProps {
@@ -23,7 +23,9 @@ const defaultFormData: ProjectFormData = {
   links: [{ id: newId(), url: '' }],
   credentials: [{ id: newId(), login: '', password: '' }],
   status: 'a_faire',
+  priority: 3,
   progress: 0,
+  technologies: [],
   start_date: new Date().toISOString().split('T')[0],
   description: '',
 }
@@ -47,6 +49,7 @@ export function ProjectForm({
     initialData ?? defaultFormData
   )
   const [shownPasswords, setShownPasswords] = useState<Record<string, boolean>>({})
+  const [techInput, setTechInput] = useState('')
   const [errors, setErrors] = useState<Partial<Record<keyof ProjectFormData, string>>>({})
   const [submitError, setSubmitError] = useState('')
 
@@ -107,6 +110,24 @@ export function ProjectForm({
 
   function togglePassword(id: string) {
     setShownPasswords((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  function addTechnology(raw: string) {
+    const tech = raw.trim().replace(/,$/, '')
+    if (!tech) return
+    setFormData((prev) =>
+      prev.technologies.some((t) => t.toLowerCase() === tech.toLowerCase())
+        ? prev
+        : { ...prev, technologies: [...prev.technologies, tech] }
+    )
+    setTechInput('')
+  }
+
+  function removeTechnology(tech: string) {
+    setFormData((prev) => ({
+      ...prev,
+      technologies: prev.technologies.filter((t) => t !== tech),
+    }))
   }
 
   function validate(): boolean {
@@ -322,6 +343,76 @@ export function ProjectForm({
             </option>
           ))}
         </select>
+      </div>
+
+      {/* Priority */}
+      <div className="animate-slide-up" style={{ animationDelay: '90ms' }}>
+        <label htmlFor="priority" className={LABEL_CLASS}>
+          ⚡ Priorité
+        </label>
+        <select
+          id="priority"
+          name="priority"
+          value={formData.priority}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, priority: Number(e.target.value) as ProjectPriority }))
+          }
+          className={`${INPUT_CLASS} appearance-none [&>option]:bg-white [&>option]:text-gray-900`}
+        >
+          {((Object.entries(PRIORITY_LABELS) as unknown as [ProjectPriority, string][])).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Technologies */}
+      <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <label htmlFor="technologies" className={LABEL_CLASS}>
+          🛠️ Technologies
+        </label>
+        {formData.technologies.length > 0 && (
+          <div className="mb-2 flex flex-wrap gap-1.5">
+            {formData.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center gap-1 rounded-full bg-[#f7ecf6] px-2.5 py-1 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]"
+              >
+                {tech}
+                <button
+                  type="button"
+                  onClick={() => removeTechnology(tech)}
+                  className="rounded-full p-0.5 transition-colors hover:bg-[#542a52]/10"
+                  title={`Retirer ${tech}`}
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+        <input
+          type="text"
+          id="technologies"
+          value={techInput}
+          onChange={(e) => {
+            const v = e.target.value
+            if (v.endsWith(',')) addTechnology(v)
+            else setTechInput(v)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              addTechnology(techInput)
+            } else if (e.key === 'Backspace' && !techInput && formData.technologies.length > 0) {
+              removeTechnology(formData.technologies[formData.technologies.length - 1])
+            }
+          }}
+          onBlur={() => addTechnology(techInput)}
+          placeholder="React, Supabase, Tailwind... (Entrée ou virgule pour ajouter)"
+          className={INPUT_CLASS}
+        />
       </div>
 
       {/* Progress */}

@@ -81,7 +81,9 @@ export function EditProject() {
     links: project.links,
     credentials: project.credentials,
     status: project.status,
+    priority: project.priority,
     progress: project.progress,
+    technologies: project.technologies,
     start_date: project.start_date,
     description: project.description,
   }

@@ -22,13 +22,22 @@ import {
   CheckCircle2,
   Shield,
   History,
+  Zap,
 } from 'lucide-react'
 import { getProject, deleteProject } from '@/services/projects'
+import { getCreatives, updateCreativeMetadata, deleteCreative } from '@/services/creatives'
 import type { Project, ProjectStatus, HistoryEntry } from '@/types/project'
-import { STATUS_LABELS } from '@/types/project'
+import type { Creative, CreativeMetadataInput } from '@/types/creative'
+import { STATUS_LABELS, PRIORITY_LABELS_SHORT, PRIORITY_COLORS } from '@/types/project'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Toast } from '@/components/Toast'
 import { ProjectDetailsSkeleton } from '@/components/Skeleton'
+import { CreativeSection } from '@/components/CreativeSection'
+import { CreativeUploadModal } from '@/components/CreativeUploadModal'
+import { CreativeFormModal } from '@/components/CreativeFormModal'
+import { CreativeDetailModal } from '@/components/CreativeDetailModal'
+import { Palette } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 
 const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
@@ -226,6 +235,7 @@ function ProgressRing({ progress, status }: { progress: number; status: ProjectS
 export function ProjectDetails() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
@@ -234,6 +244,14 @@ export function ProjectDetails() {
   const [deleteTarget, setDeleteTarget] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
+  // ===== Creatives state =====
+  const [creatives, setCreatives] = useState<Creative[]>([])
+  const [uploadOpen, setUploadOpen] = useState(false)
+  const [editTarget, setEditTarget] = useState<Creative | null>(null)
+  const [detailTarget, setDetailTarget] = useState<Creative | null>(null)
+  const [creativeDeleteTarget, setCreativeDeleteTarget] = useState<Creative | null>(null)
+  const [creativeBusy, setCreativeBusy] = useState(false)
 
   function togglePassword(credId: string) {
     setShownPasswords((prev) => ({ ...prev, [credId]: !prev[credId] }))
@@ -262,7 +280,44 @@ export function ProjectDetails() {
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false))
+    getCreatives(id)
+      .then(setCreatives)
+      .catch(() => {}) // creatives are optional; the page still renders
   }, [id])
+
+  // ===== Creatives handlers =====
+  async function handleCreativeEditSubmit(metadata: CreativeMetadataInput) {
+    if (!editTarget) return
+    setCreativeBusy(true)
+    try {
+      const updated = await updateCreativeMetadata(editTarget.id, metadata)
+      setCreatives((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+      setEditTarget(null)
+      setDetailTarget((prev) => (prev && prev.id === updated.id ? updated : prev))
+      setToast({ message: 'Creative mise à jour.', type: 'success' })
+    } catch (err) {
+      throw err // let the form modal display the error
+    } finally {
+      setCreativeBusy(false)
+    }
+  }
+
+  async function handleCreativeDelete() {
+    if (!creativeDeleteTarget) return
+    setCreativeBusy(true)
+    try {
+      await deleteCreative(creativeDeleteTarget)
+      setCreatives((prev) => prev.filter((c) => c.id !== creativeDeleteTarget.id))
+      setDetailTarget((prev) => (prev && prev.id === creativeDeleteTarget.id ? null : prev))
+      setCreativeDeleteTarget(null)
+      setToast({ message: 'Creative supprimée.', type: 'success' })
+    } catch {
+      // Storage or DB failed: warn instead of silently keeping an inconsistent state (spec #26)
+      setToast({ message: 'Impossible de supprimer le fichier. Réessayez.', type: 'error' })
+    } finally {
+      setCreativeBusy(false)
+    }
+  }
 
   async function handleDelete() {
     if (!project) return
@@ -349,10 +404,29 @@ export function ProjectDetails() {
               </h1>
 
               <div className="mt-5 flex flex-wrap items-center gap-2">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium ring-1 ${PRIORITY_COLORS[project.priority]}`}
+                >
+                  <Zap className="h-3.5 w-3.5" />
+                  Priorité {PRIORITY_LABELS_SHORT[project.priority]}
+                </span>
                 <Chip icon={User} text={project.responsible || 'Non assigné'} />
                 <Chip icon={Calendar} text={`Début ${formatDate(project.start_date)}`} />
                 <Chip icon={Clock} text={`Modifié ${formatDate(project.updated_at)}`} />
               </div>
+
+              {project.technologies.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-full bg-[#f7ecf6] px-2.5 py-1 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <ProgressRing progress={project.progress} status={project.status} />
@@ -557,6 +631,40 @@ export function ProjectDetails() {
           </div>
         </div>
 
+        {/* ===== Creatives ===== */}
+        <GlassCard delay={190} className="mt-6">
+          <div className="mb-5 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="icon-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-[#f2836f]">
+                <Palette className="h-4 w-4" />
+              </span>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                Creatives
+              </h3>
+              {creatives.length > 0 && (
+                <span className="rounded-full bg-[#f7ecf6] px-2 py-0.5 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]">
+                  {creatives.length}
+                </span>
+              )}
+            </div>
+            <button
+              onClick={() => setUploadOpen(true)}
+              className="btn-mac inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Ajouter une creative
+            </button>
+          </div>
+
+          <CreativeSection
+            creatives={creatives}
+            onEdit={setEditTarget}
+            onDelete={setCreativeDeleteTarget}
+            onOpen={setDetailTarget}
+            onAdd={() => setUploadOpen(true)}
+          />
+        </GlassCard>
+
         {/* ===== History ===== */}
         <GlassCard delay={200} className="mt-6">
           <SectionTitle icon={History} title="Historique" tone="text-[#542a52]" />
@@ -605,6 +713,47 @@ export function ProjectDetails() {
         onConfirm={handleDelete}
         onCancel={() => setDeleteTarget(false)}
         loading={deleting}
+      />
+
+      {/* ===== Creatives modals ===== */}
+      {project && user && (
+        <CreativeUploadModal
+          isOpen={uploadOpen}
+          projectId={project.id}
+          userId={user.id}
+          onClose={() => setUploadOpen(false)}
+          onCreated={(creative) => {
+            setCreatives((prev) => [creative, ...prev])
+            setToast({ message: 'Creative ajoutée !', type: 'success' })
+          }}
+          onError={(message) => setToast({ message, type: 'error' })}
+        />
+      )}
+      <CreativeFormModal
+        isOpen={!!editTarget}
+        initialData={editTarget}
+        loading={creativeBusy}
+        onClose={() => setEditTarget(null)}
+        onSubmit={handleCreativeEditSubmit}
+      />
+      <CreativeDetailModal
+        creative={detailTarget}
+        onClose={() => setDetailTarget(null)}
+        onEdit={(c) => {
+          setDetailTarget(null)
+          setEditTarget(c)
+        }}
+        onDelete={(c) => setCreativeDeleteTarget(c)}
+      />
+      <ConfirmDialog
+        isOpen={!!creativeDeleteTarget}
+        title="Supprimer cette creative ?"
+        message={`« ${creativeDeleteTarget?.title ?? ''} » et son fichier seront définitivement supprimés.`}
+        confirmLabel="Supprimer"
+        cancelLabel="Annuler"
+        onConfirm={handleCreativeDelete}
+        onCancel={() => setCreativeDeleteTarget(null)}
+        loading={creativeBusy}
       />
 
       {toast && (

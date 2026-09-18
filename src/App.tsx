@@ -6,6 +6,7 @@ import { Login } from '@/pages/Login'
 import { ForgotPassword } from '@/pages/ForgotPassword'
 import { ResetPassword } from '@/pages/ResetPassword'
 import { Dashboard } from '@/pages/Dashboard'
+import { Creatives } from '@/pages/Creatives'
 import { ProjectDetails } from '@/pages/ProjectDetails'
 import { NewProject } from '@/pages/NewProject'
 import { EditProject } from '@/pages/EditProject'
@@ -82,6 +83,18 @@ export default function App() {
               <AppLayout>
                 <PageTransition>
                   <Dashboard />
+                </PageTransition>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/creatives"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <PageTransition>
+                  <Creatives />
                 </PageTransition>
               </AppLayout>
             </ProtectedRoute>

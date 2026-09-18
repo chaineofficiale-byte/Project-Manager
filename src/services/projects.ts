@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
-import type { Project, ProjectFormData, HistoryEntry } from '@/types/project'
+import type { Project, ProjectFormData, HistoryEntry, ProjectPriority } from '@/types/project'
+import { PRIORITY_LABELS_SHORT } from '@/types/project'
 
 function newId(): string {
   return crypto.randomUUID()
@@ -11,7 +12,9 @@ function normalize(p: any): Project {
     responsible: p.responsible ?? '',
     links: p.links ?? [],
     credentials: p.credentials ?? [],
+    priority: (p.priority ?? 3) as ProjectPriority,
     progress: p.progress ?? 0,
+    technologies: p.technologies ?? [],
     history: p.history ?? [],
   }
 }
@@ -64,17 +67,35 @@ export async function createProject(formData: ProjectFormData): Promise<Project>
   if (formData.responsible) {
     history.push(createHistoryEntry('edited', `Responsable : ${formData.responsible}`))
   }
+  if (formData.priority !== 2) {
+    history.push(createHistoryEntry('edited', `Priorité définie : ${PRIORITY_LABELS_SHORT[formData.priority]}`))
+  }
 
-  const { data, error } = await supabase
+  const { priority, technologies, ...rest } = formData
+  const insertPayload = {
+    ...rest,
+    history,
+    created_at: now,
+    updated_at: now,
+    priority: priority ?? 3,
+    technologies: technologies ?? [],
+  }
+
+  let { data, error } = await supabase
     .from('projects')
-    .insert({
-      ...formData,
-      history,
-      created_at: now,
-      updated_at: now,
-    })
+    .insert(insertPayload)
     .select()
     .single()
+
+  // Graceful fallback: if the priority/technologies columns don't exist yet
+  // (Phase 5 SQL not run), retry once without them instead of failing.
+  if (error && (error as { code?: string }).code === '42703') {
+    ;({ data, error } = await supabase
+      .from('projects')
+      .insert({ ...rest, history, created_at: now, updated_at: now })
+      .select()
+      .single())
+  }
 
   if (error) throw error
   return normalize(data)
@@ -128,6 +149,25 @@ export async function updateProject(
         newEntries.push(createHistoryEntry('edited', 'Responsable retiré'))
       }
     }
+
+    // Priority changed
+    if (current.priority !== formData.priority) {
+      const plabels = PRIORITY_LABELS_SHORT
+      newEntries.push(createHistoryEntry('edited', `Priorité : ${plabels[current.priority] ?? current.priority} → ${plabels[formData.priority] ?? formData.priority}`))
+    }
+
+    // Technologies changed
+    const oldTechs = [...(current.technologies ?? [])].sort().join(',')
+    const newTechs = [...(formData.technologies ?? [])].sort().join(',')
+    if (oldTechs !== newTechs) {
+      newEntries.push(
+        createHistoryEntry('edited',
+          newTechs
+            ? `Technologies : ${formData.technologies.join(', ')}`
+            : 'Technologies retirées'
+        )
+      )
+    }
   }
 
   // If no specific changes detected, add generic edit
@@ -137,16 +177,32 @@ export async function updateProject(
 
   const updatedHistory = [...existingHistory, ...newEntries]
 
-  const { data, error } = await supabase
+  const { priority, technologies, ...rest } = formData
+  const updatePayload = {
+    ...rest,
+    history: updatedHistory,
+    updated_at: now,
+    priority: priority ?? 3,
+    technologies: technologies ?? [],
+  }
+
+  let { data, error } = await supabase
     .from('projects')
-    .update({
-      ...formData,
-      history: updatedHistory,
-      updated_at: now,
-    })
+    .update(updatePayload)
     .eq('id', id)
     .select()
     .single()
+
+  // Graceful fallback: retry without the Phase 5 columns if missing.
+  if (error && (error as { code?: string }).code === '42703') {
+    const { priority: _p, technologies: _t, ...legacy } = updatePayload
+    ;({ data, error } = await supabase
+      .from('projects')
+      .update(legacy)
+      .eq('id', id)
+      .select()
+      .single())
+  }
 
   if (error) throw error
   return normalize(data)

@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Search, FolderOpen, Sparkles, LayoutGrid } from 'lucide-react'
+import { Plus, Search, FolderOpen, Sparkles, LayoutGrid, Zap, ArrowUpDown, Layers } from 'lucide-react'
 import { getProjects, deleteProject } from '@/services/projects'
-import type { Project, ProjectStatus } from '@/types/project'
-import { STATUS_LABELS } from '@/types/project'
+import type { Project, ProjectStatus, ProjectPriority } from '@/types/project'
+import { STATUS_LABELS, PRIORITY_LABELS_SHORT } from '@/types/project'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Toast } from '@/components/Toast'
@@ -11,12 +11,17 @@ import { DashboardSkeleton } from '@/components/Skeleton'
 
 const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
+type SortKey = 'updated_at' | 'created_at' | 'name' | 'progress' | 'priority'
+
 export function Dashboard() {
   const navigate = useNavigate()
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'all'>('all')
+  const [priorityFilter, setPriorityFilter] = useState<ProjectPriority | 'all'>('all')
+  const [techFilter, setTechFilter] = useState<string>('all')
+  const [sortKey, setSortKey] = useState<SortKey>('updated_at')
   const [deleteTarget, setDeleteTarget] = useState<Project | null>(null)
   const [deleting, setDeleting] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
@@ -36,11 +41,34 @@ export function Dashboard() {
     loadProjects()
   }, [loadProjects])
 
-  const filteredProjects = projects.filter((p) => {
-    const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase())
-    const matchesStatus = statusFilter === 'all' || p.status === statusFilter
-    return matchesSearch && matchesStatus
-  })
+  const allTechnologies = [...new Set(projects.flatMap((p) => p.technologies ?? []))].sort()
+
+  const filteredProjects = projects
+    .filter((p) => {
+      const q = search.toLowerCase()
+      const matchesSearch =
+        p.name.toLowerCase().includes(q) ||
+        p.responsible.toLowerCase().includes(q) ||
+        (p.technologies ?? []).some((t) => t.toLowerCase().includes(q))
+      const matchesStatus = statusFilter === 'all' || p.status === statusFilter
+      const matchesPriority = priorityFilter === 'all' || p.priority === priorityFilter
+      const matchesTech = techFilter === 'all' || (p.technologies ?? []).includes(techFilter)
+      return matchesSearch && matchesStatus && matchesPriority && matchesTech
+    })
+    .sort((a, b) => {
+      switch (sortKey) {
+        case 'name':
+          return a.name.localeCompare(b.name)
+        case 'progress':
+          return b.progress - a.progress
+        case 'priority':
+          return a.priority - b.priority
+        case 'created_at':
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        default:
+          return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      }
+    })
 
   async function handleDelete() {
     if (!deleteTarget) return
@@ -116,17 +144,58 @@ export function Dashboard() {
 
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
           {projects.length > 0 && (
-            <div className="animate-slide-up mb-6 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '40ms' }}>
-              {/* Search */}
-              <div className="group relative flex-1">
-                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-[#542a52]" />
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Rechercher un projet..."
-                  className="w-full rounded-xl border border-gray-200 bg-white/70 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#542a52]/20"
-                />
+            <div className="animate-slide-up mb-6 flex flex-col gap-3" style={{ animationDelay: '40ms' }}>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                {/* Search */}
+                <div className="group relative flex-1">
+                  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-[#542a52]" />
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Rechercher un projet..."
+                    className="w-full rounded-xl border border-gray-200 bg-white/70 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#542a52]/20"
+                  />
+                </div>
+
+                {/* Priority filter */}
+                <select
+                  value={priorityFilter}
+                  onChange={(e) => setPriorityFilter(e.target.value === 'all' ? 'all' : (Number(e.target.value) as ProjectPriority))}
+                  className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:outline-none focus:ring-2 focus:ring-[#542a52]/20 [&>option]:bg-white"
+                >
+                  <option value="all">Toutes priorités</option>
+                  {([1, 2, 3, 4, 5] as ProjectPriority[]).map((p) => (
+                    <option key={p} value={p}>Priorité {PRIORITY_LABELS_SHORT[p]}</option>
+                  ))}
+                </select>
+
+                {/* Technology filter */}
+                {allTechnologies.length > 0 && (
+                  <select
+                    value={techFilter}
+                    onChange={(e) => setTechFilter(e.target.value)}
+                    className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:outline-none focus:ring-2 focus:ring-[#542a52]/20 [&>option]:bg-white"
+                  >
+                    <option value="all">Toutes technologies</option>
+                    {allTechnologies.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                )}
+
+                {/* Sort */}
+                <select
+                  value={sortKey}
+                  onChange={(e) => setSortKey(e.target.value as SortKey)}
+                  className="rounded-xl border border-gray-200 bg-white/70 px-3 py-3 text-sm text-gray-700 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:outline-none focus:ring-2 focus:ring-[#542a52]/20 [&>option]:bg-white"
+                >
+                  <option value="updated_at">Modifié récemment</option>
+                  <option value="created_at">Créé récemment</option>
+                  <option value="name">Nom (A-Z)</option>
+                  <option value="progress">Progression</option>
+                  <option value="priority">Priorité</option>
+                </select>
               </div>
 
               {/* Status filter pills */}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { Lock, Mail, Loader2, Eye, EyeOff, ArrowRight, Shield, Zap, Globe, CheckCircle2, RotateCcw } from 'lucide-react'
+import logoMark from '@/assets/logo-mark.png'
 import { AuthSkeleton } from '@/components/Skeleton'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -143,9 +144,11 @@ export function Login() {
         <div className="relative z-10 flex h-full flex-col justify-center px-16 xl:px-24">
           <div className="animate-slide-up" style={{ animationDelay: '80ms' }}>
             <div className="mb-6 flex items-center gap-3">
-              <div className="icon-tile flex h-12 w-12 items-center justify-center rounded-2xl text-[#542a52]">
-                <Zap className="h-6 w-6" />
-              </div>
+              <img
+                src={logoMark}
+                alt="Project Manager"
+                className="h-12 w-12 rounded-2xl shadow-md shadow-slate-900/15"
+              />
               <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
             </div>
 
@@ -188,9 +191,11 @@ export function Login() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="mb-8 animate-scale-in text-center lg:hidden">
-            <div className="icon-tile mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl text-[#542a52]">
-              <Zap className="h-7 w-7" />
-            </div>
+            <img
+              src={logoMark}
+              alt="Project Manager"
+              className="mx-auto mb-3 h-14 w-14 rounded-2xl shadow-md shadow-slate-900/15"
+            />
             <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
           </div>
 

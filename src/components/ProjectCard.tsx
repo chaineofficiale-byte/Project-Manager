@@ -1,6 +1,7 @@
-import { Eye, Pencil, Trash2, ExternalLink, User, Calendar, Clock } from 'lucide-react'
+import { Eye, Pencil, Trash2, ExternalLink, User, Calendar, Clock, Zap } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import type { Project } from '@/types/project'
+import { PRIORITY_LABELS_SHORT, PRIORITY_COLORS } from '@/types/project'
 import { StatusBadge } from './StatusBadge'
 import { ProgressBar } from './ProgressBar'
 
@@ -32,6 +33,26 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
             {project.name}
           </h3>
           <StatusBadge status={project.status} />
+        </div>
+
+        <div className="mb-3 flex flex-wrap items-center gap-1.5">
+          <span
+            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ${PRIORITY_COLORS[project.priority]}`}
+          >
+            <Zap className="h-3 w-3" />
+            {PRIORITY_LABELS_SHORT[project.priority]}
+          </span>
+          {project.technologies.slice(0, 3).map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full bg-[#f7ecf6] px-2.5 py-0.5 text-xs font-medium text-[#542a52] ring-1 ring-[#dfb9da]"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 3 && (
+            <span className="text-xs text-gray-400">+{project.technologies.length - 3}</span>
+          )}
         </div>
 
         {project.description && (
