@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Lock, Eye, EyeOff, Loader2, CheckCircle, Shield } from 'lucide-react'
+import { ArrowLeft, Lock, Eye, EyeOff, Loader2, CheckCircle, Users } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
+import { initialsOf, usePresence } from '@/hooks/usePresence'
 
 const PAGE_BG = 'linear-gradient(135deg, #f8fafc 0%, #f8fafc 50%, #eef2ff 100%)'
 
 export function Settings() {
   const navigate = useNavigate()
   const { user, changePassword } = useAuth()
+  const { onlineUsers, ready } = usePresence(user)
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -83,14 +85,78 @@ export function Settings() {
           <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl" style={{ animationDelay: '60ms' }}>
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#4f46e5]/50 to-transparent" />
             <div className="flex items-center gap-4">
-              <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-2xl text-[#4f46e5]">
-                <Shield className="h-7 w-7" />
+              <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#8b5cf6] text-base font-bold text-white">
+                {initialsOf(user?.email ?? '?')}
+                <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white bg-emerald-500" title="Connecté" />
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">Mon compte</h3>
-                <p className="text-sm text-gray-500">{user?.email}</p>
+              <div className="min-w-0">
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                  Mon compte
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-600 ring-1 ring-emerald-200">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                    Connecté
+                  </span>
+                </h3>
+                <p className="truncate text-sm text-gray-500">{user?.email}</p>
+                {user?.last_sign_in_at && (
+                  <p className="mt-0.5 text-xs text-gray-400">
+                    Dernière connexion : {new Date(user.last_sign_in_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                )}
               </div>
             </div>
+          </div>
+
+          {/* Qui est en ligne */}
+          <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl" style={{ animationDelay: '80ms' }}>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#a78bfa]/50 to-transparent" />
+            <div className="mb-4 flex items-center gap-3">
+              <div className="icon-tile flex h-10 w-10 items-center justify-center rounded-xl text-[#4f46e5]">
+                <Users className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">
+                  En ligne maintenant
+                  {ready && (
+                    <span className="ml-2 rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700 ring-1 ring-indigo-200">
+                      {onlineUsers.length}
+                    </span>
+                  )}
+                </h3>
+                <p className="text-xs text-gray-500">Comptes connectés au workspace en ce moment</p>
+              </div>
+            </div>
+            {!ready ? (
+              <p className="py-2 text-center text-sm text-gray-400">Connexion au service de présence...</p>
+            ) : onlineUsers.length === 0 ? (
+              <p className="py-2 text-center text-sm text-gray-400">
+                Personne détectée — vérifiez que Realtime est activé sur Supabase.
+              </p>
+            ) : (
+              <ul className="space-y-2">
+                {onlineUsers.map((u) => (
+                  <li
+                    key={u.id}
+                    className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white/60 px-4 py-2.5"
+                  >
+                    <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#4f46e5] to-[#8b5cf6] text-[11px] font-bold text-white">
+                      {initialsOf(u.email)}
+                      <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                    </span>
+                    <span className="min-w-0 flex-1 truncate text-sm font-medium text-gray-800">{u.email}</span>
+                    {u.id === user?.id ? (
+                      <span className="shrink-0 rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold text-indigo-600 ring-1 ring-indigo-200">
+                        Vous
+                      </span>
+                    ) : (
+                      <span className="shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-600 ring-1 ring-emerald-200">
+                        En ligne
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Change password form */}

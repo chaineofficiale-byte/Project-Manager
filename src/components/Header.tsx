@@ -1,6 +1,7 @@
 import { LogOut, Settings, LayoutGrid, Files } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
+import { initialsOf, usePresence } from '@/hooks/usePresence'
 import logoMark from '@/assets/logo-mark.png'
 
 const NAV_ITEMS = [
@@ -9,7 +10,8 @@ const NAV_ITEMS = [
 ]
 
 export function Header() {
-  const { signOut } = useAuth()
+  const { user, signOut } = useAuth()
+  const { onlineUsers, ready } = usePresence(user)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -56,6 +58,30 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Qui est en ligne */}
+          {ready && onlineUsers.length > 0 && (
+            <button
+              onClick={() => navigate('/settings')}
+              title={`En ligne (${onlineUsers.length}) : ${onlineUsers.map((u) => u.email).join(', ')}`}
+              className="btn-mac hidden items-center gap-2 rounded-xl border border-gray-200 bg-white/70 py-2 pl-3 pr-3.5 text-sm font-medium text-gray-600 transition-all hover:border-[#a5b4fc] hover:bg-[#eef2ff] hover:text-gray-900 sm:inline-flex"
+            >
+              <span className="flex -space-x-1.5">
+                {onlineUsers.slice(0, 3).map((u) => (
+                  <span
+                    key={u.id}
+                    title={u.email}
+                    className="relative flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-[#4f46e5] to-[#8b5cf6] text-[9px] font-bold text-white ring-2 ring-white"
+                  >
+                    {initialsOf(u.email)}
+                    <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-white" />
+                  </span>
+                ))}
+              </span>
+              <span className="text-xs">
+                {onlineUsers.length} en ligne
+              </span>
+            </button>
+          )}
           <button
             onClick={() => navigate('/settings')}
             className="btn-mac inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 transition-all hover:border-[#a5b4fc] hover:bg-[#eef2ff] hover:text-gray-900"
