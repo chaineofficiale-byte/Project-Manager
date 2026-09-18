@@ -30,7 +30,7 @@ import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Toast } from '@/components/Toast'
 import { ProjectDetailsSkeleton } from '@/components/Skeleton'
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 /* ===== PREMIUM STATUS STYLES (light) ===== */
 
@@ -38,25 +38,25 @@ const STATUS_BADGE: Record<ProjectStatus, { ring: string; dot: string }> = {
   a_faire: { ring: 'bg-red-50 text-red-600 ring-1 ring-red-200', dot: 'bg-red-500' },
   en_cours: { ring: 'bg-amber-50 text-amber-600 ring-1 ring-amber-200', dot: 'bg-amber-500' },
   en_pause: { ring: 'bg-orange-50 text-orange-600 ring-1 ring-orange-200', dot: 'bg-orange-500' },
-  termine: { ring: 'bg-[#f0fdfa] text-[#0f766e] ring-1 ring-[#99e8dd]', dot: 'bg-[#14b8a6]' },
+  termine: { ring: 'bg-[#faf0f9] text-[#421f40] ring-1 ring-[#dfb9da]', dot: 'bg-[#fb9b8a]' },
 }
 
 const RING_GRADIENTS: Record<ProjectStatus, [string, string, string]> = {
   a_faire: ['#94a3b8', '#cbd5e1', '#94a3b8'],
-  en_cours: ['#ff6b5a', '#ff9a7b', '#14b8a6'],
-  en_pause: ['#fb923c', '#fbbf24', '#fb923c'],
-  termine: ['#14b8a6', '#2dd4bf', '#14b8a6'],
+  en_cours: ['#542a52', '#8b4f86', '#fb9b8a'],
+  en_pause: ['#ef8672', '#f6b09a', '#ef8672'],
+  termine: ['#fb9b8a', '#fdaa9b', '#fb9b8a'],
 }
 
 /* ===== HISTORY ===== */
 
 const ACTION_STYLES: Record<string, { icon: typeof Clock; gradient: string }> = {
   created: { icon: Plus, gradient: 'from-emerald-500 to-green-500' },
-  edited: { icon: Pencil, gradient: 'from-[#14b8a6] to-[#0d9488]' },
+  edited: { icon: Pencil, gradient: 'from-[#fb9b8a] to-[#f2836f]' },
   status_changed: { icon: ArrowRightLeft, gradient: 'from-amber-500 to-orange-500' },
-  progress_updated: { icon: ArrowRightLeft, gradient: 'from-[#ff6b5a] to-[#ff8a6b]' },
+  progress_updated: { icon: ArrowRightLeft, gradient: 'from-[#542a52] to-[#6d3a69]' },
   paused: { icon: Pause, gradient: 'from-orange-500 to-amber-500' },
-  completed: { icon: CheckCircle2, gradient: 'from-[#14b8a6] to-[#0d9488]' },
+  completed: { icon: CheckCircle2, gradient: 'from-[#fb9b8a] to-[#f2836f]' },
   deleted: { icon: Trash2, gradient: 'from-red-500 to-rose-500' },
 }
 
@@ -102,21 +102,21 @@ function AmbientBackground() {
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
         className="animate-blob absolute -left-40 top-[-10%] h-[500px] w-[500px] opacity-25 blur-3xl"
-        style={{ background: 'linear-gradient(135deg, #ffd4cb, #ffb3a7)' }}
+        style={{ background: 'linear-gradient(135deg, #fdd9d0, #cfa3c8)' }}
       />
       <div
         className="animate-blob absolute -right-32 top-[30%] h-[420px] w-[420px] opacity-20 blur-3xl"
-        style={{ background: 'linear-gradient(135deg, #99f6e4, #5eead4)', animationDelay: '2s' }}
+        style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
       />
       <div
         className="animate-blob absolute bottom-[-15%] left-[30%] h-[360px] w-[360px] opacity-20 blur-3xl"
-        style={{ background: 'linear-gradient(135deg, #fde68a, #fcd34d)', animationDelay: '4s' }}
+        style={{ background: 'linear-gradient(135deg, #f6cfe9, #eab4de)', animationDelay: '4s' }}
       />
       <div
         className="absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,107,90,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,90,0.05) 1px, transparent 1px)',
+            'linear-gradient(rgba(84,42,82,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.05) 1px, transparent 1px)',
           backgroundSize: '50px 50px',
         }}
       />
@@ -138,7 +138,7 @@ function GlassCard({
       className={`animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-7 ${className}`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6b5a]/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/40 to-transparent" />
       {children}
     </div>
   )
@@ -156,7 +156,7 @@ function SectionTitle({
   return (
     <div className="mb-5 flex items-center gap-3">
       <span
-        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} shadow-lg shadow-slate-900/10`}
+        className={`icon-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} shadow-lg shadow-slate-900/10`}
       >
         <Icon className="h-4 w-4 text-white" />
       </span>
@@ -169,7 +169,7 @@ function SectionTitle({
 function Chip({ icon: Icon, text }: { icon: typeof Clock; text: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white/70 px-3 py-1.5 text-xs text-gray-600 backdrop-blur-sm">
-      <Icon className="h-3.5 w-3.5 text-[#ff6b5a]/80" />
+      <Icon className="h-3.5 w-3.5 text-[#542a52]/80" />
       {text}
     </span>
   )
@@ -185,7 +185,7 @@ function ProgressRing({ progress, status }: { progress: number; status: ProjectS
 
   return (
     <div className="relative flex h-40 w-40 shrink-0 items-center justify-center">
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#ffd4cb]/70 to-[#99f6e4]/60 blur-2xl" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#fdd9d0]/70 to-[#ecd2e9]/60 blur-2xl" />
       <svg viewBox="0 0 128 128" className="relative h-40 w-40 -rotate-90">
         <defs>
           <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -194,7 +194,7 @@ function ProgressRing({ progress, status }: { progress: number; status: ProjectS
             <stop offset="100%" stopColor={c3} />
           </linearGradient>
         </defs>
-        <circle cx="64" cy="64" r={radius} fill="none" stroke="rgba(255,107,90,0.15)" strokeWidth="10" />
+        <circle cx="64" cy="64" r={radius} fill="none" stroke="rgba(84,42,82,0.15)" strokeWidth="10" />
         <circle
           cx="64"
           cy="64"
@@ -287,16 +287,16 @@ export function ProjectDetails() {
         <AmbientBackground />
         <div className="relative z-10 mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 text-center sm:px-6">
           <div className="animate-scale-in mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-xl">
-            <AlertCircle className="h-10 w-10 text-[#ff6b5a]/70" />
+            <AlertCircle className="h-10 w-10 text-[#542a52]/70" />
           </div>
           <h2 className="animate-slide-up mb-2 text-2xl font-bold text-gray-900">Projet introuvable</h2>
-          <p className="animate-slide-up mb-8 text-sm text-gray-500" style={{ animationDelay: '100ms' }}>
+          <p className="animate-slide-up mb-8 text-sm text-gray-500" style={{ animationDelay: '40ms' }}>
             Ce projet n'existe pas ou a été supprimé.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
-            className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all hover:from-[#f5543f] hover:to-[#ff7a55]"
-            style={{ animationDelay: '200ms' }}
+            className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
+            style={{ animationDelay: '80ms' }}
           >
             <ArrowLeft className="h-4 w-4" />
             Retour aux projets
@@ -321,7 +321,7 @@ export function ProjectDetails() {
         <div className="animate-slide-up pt-6">
           <button
             onClick={() => navigate('/dashboard')}
-            className="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#ffb3a7] hover:bg-[#fff4f1] hover:text-gray-900"
+            className="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6] hover:text-gray-900"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             Retour aux projets
@@ -332,8 +332,8 @@ export function ProjectDetails() {
         <div
           className="animate-card-enter relative mt-4 overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-8"
         >
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6b5a]/60 to-transparent" />
-          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-[#ffd4cb]/70 to-[#99f6e4]/50 blur-3xl" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/60 to-transparent" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-[#fdd9d0]/70 to-[#ecd2e9]/50 blur-3xl" />
 
           <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
@@ -364,24 +364,24 @@ export function ProjectDetails() {
           {/* --- Main column --- */}
           <div className="space-y-6 lg:col-span-2">
             {/* Links */}
-            <GlassCard delay={100}>
-              <SectionTitle icon={Link2} title="Liens du projet" gradient="from-[#14b8a6] to-[#0d9488]" />
+            <GlassCard delay={50}>
+              <SectionTitle icon={Link2} title="Liens du projet" gradient="from-[#fb9b8a] to-[#f2836f]" />
               {(project.links ?? []).length > 0 ? (
                 <ul className="space-y-2.5">
                   {(project.links ?? []).map((link) => (
                     <li
                       key={link.id}
-                      className="group flex items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-white/60 px-4 py-3 transition-all hover:border-[#ffb3a7] hover:bg-[#fff4f1]/50"
+                      className="group flex items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-white/60 px-4 py-3 transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6]/50"
                     >
                       <div className="flex min-w-0 items-center gap-3">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#ccfbf1] to-[#99f6e4] ring-1 ring-[#99e8dd]">
+                        <span className="icon-tile flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#f6e3f4] to-[#ecd2e9] ring-1 ring-[#dfb9da]">
                           <Link2 className="h-3.5 w-3.5 text-blue-500" />
                         </span>
                         <a
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="truncate text-sm text-[#0d9488] transition-colors hover:text-[#0f766e] hover:underline"
+                          className="truncate text-sm text-[#f2836f] transition-colors hover:text-[#421f40] hover:underline"
                         >
                           {link.url}
                         </a>
@@ -417,17 +417,17 @@ export function ProjectDetails() {
             </GlassCard>
 
             {/* Credentials vault */}
-            <GlassCard delay={175}>
-              <SectionTitle icon={KeyRound} title="Identifiants admin" gradient="from-[#ff6b5a] to-[#ff8a6b]" />
+            <GlassCard delay={80}>
+              <SectionTitle icon={KeyRound} title="Identifiants admin" gradient="from-[#542a52] to-[#6d3a69]" />
               {(project.credentials ?? []).length > 0 ? (
                 <ul className="space-y-3">
                   {(project.credentials ?? []).map((cred, index) => (
                     <li
                       key={cred.id}
-                      className="rounded-2xl border border-gray-100 bg-white/60 p-4 transition-all hover:border-[#ffb3a7]/60"
+                      className="rounded-2xl border border-gray-100 bg-white/60 p-4 transition-all hover:border-[#cfa3c8]/60"
                     >
                       {(project.credentials?.length ?? 0) > 1 && (
-                        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#ff6b5a]/70">
+                        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#542a52]/70">
                           Accès {index + 1}
                         </p>
                       )}
@@ -500,8 +500,8 @@ export function ProjectDetails() {
             </GlassCard>
 
             {/* Description */}
-            <GlassCard delay={250}>
-              <SectionTitle icon={FileText} title="Description" gradient="from-[#ff6b5a] to-[#ff8a6b]" />
+            <GlassCard delay={110}>
+              <SectionTitle icon={FileText} title="Description" gradient="from-[#542a52] to-[#6d3a69]" />
               <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-600">
                 {project.description || 'Aucune description.'}
               </p>
@@ -511,12 +511,12 @@ export function ProjectDetails() {
           {/* --- Side column --- */}
           <div className="space-y-6">
             {/* Actions */}
-            <GlassCard delay={325}>
-              <SectionTitle icon={Pencil} title="Actions" gradient="from-[#ff6b5a] to-[#ff8a6b]" />
+            <GlassCard delay={140}>
+              <SectionTitle icon={Pencil} title="Actions" gradient="from-[#542a52] to-[#6d3a69]" />
               <div className="space-y-3">
                 <button
                   onClick={() => navigate(`/project/${project.id}/edit`)}
-                  className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all duration-300 hover:from-[#f5543f] hover:to-[#ff7a55] hover:shadow-xl hover:shadow-[#ff6b5a]/30 hover:-translate-y-0.5"
+                  className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)]"
                 >
                   <Pencil className="h-4 w-4" />
                   Modifier le projet
@@ -540,8 +540,8 @@ export function ProjectDetails() {
             </GlassCard>
 
             {/* Dates */}
-            <GlassCard delay={400}>
-              <SectionTitle icon={Calendar} title="Chronologie" gradient="from-[#14b8a6] to-[#0d9488]" />
+            <GlassCard delay={170}>
+              <SectionTitle icon={Calendar} title="Chronologie" gradient="from-[#fb9b8a] to-[#f2836f]" />
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs text-gray-400">Date de début</span>
@@ -558,8 +558,8 @@ export function ProjectDetails() {
         </div>
 
         {/* ===== History ===== */}
-        <GlassCard delay={475} className="mt-6">
-          <SectionTitle icon={History} title="Historique" gradient="from-[#ff6b5a] to-[#ff8a6b]" />
+        <GlassCard delay={200} className="mt-6">
+          <SectionTitle icon={History} title="Historique" gradient="from-[#542a52] to-[#6d3a69]" />
           {sortedHistory.length === 0 ? (
             <div className="py-8 text-center">
               <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300" />
@@ -572,15 +572,15 @@ export function ProjectDetails() {
                   const { icon: Icon, gradient } = getActionStyle(entry.action)
                   const isLast = index === sortedHistory.length - 1
                   return (
-                    <li key={entry.id} className="animate-card-enter relative flex gap-4" style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}>
+                    <li key={entry.id} className="animate-card-enter relative flex gap-4" style={{ animationDelay: `${Math.min(index * 25, 200)}ms` }}>
                       <div className="flex flex-col items-center">
                         <span
-                          className={`z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradient} shadow-lg shadow-slate-900/10`}
+                          className={`icon-tile z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradient} shadow-lg shadow-slate-900/10`}
                         >
                           <Icon className="h-3.5 w-3.5 text-white" />
                         </span>
                         {!isLast && (
-                          <span className="w-px flex-1 bg-gradient-to-b from-[#ffd4cb] to-transparent" />
+                          <span className="w-px flex-1 bg-gradient-to-b from-[#fdd9d0] to-transparent" />
                         )}
                       </div>
                       <div className={`min-w-0 pt-1 ${isLast ? 'pb-1' : 'pb-6'}`}>

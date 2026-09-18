@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Lock, Eye, EyeOff, Loader2, CheckCircle2 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 export function ResetPassword() {
   const navigate = useNavigate()
@@ -44,7 +44,7 @@ export function ResetPassword() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center" style={{ background: PAGE_BG }}>
-        <Loader2 className="h-8 w-8 animate-spin text-[#ff6b5a]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#542a52]" />
       </div>
     )
   }
@@ -55,17 +55,17 @@ export function ResetPassword() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="animate-blob absolute -left-32 top-[-10%] h-[400px] w-[400px] opacity-30 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #ffd4cb, #ffb3a7)' }}
+          style={{ background: 'linear-gradient(135deg, #fdd9d0, #cfa3c8)' }}
         />
         <div
           className="animate-blob absolute -right-24 bottom-[-15%] h-[350px] w-[350px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #99f6e4, #5eead4)', animationDelay: '2s' }}
+          style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
         />
         <div
           className="absolute inset-0 opacity-[0.35]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(255,107,90,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,90,0.05) 1px, transparent 1px)',
+              'linear-gradient(rgba(84,42,82,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.05) 1px, transparent 1px)',
             backgroundSize: '50px 50px',
           }}
         />
@@ -85,7 +85,7 @@ export function ResetPassword() {
               </p>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="w-full rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all hover:from-[#f5543f] hover:to-[#ff7a55]"
+                className="btn-mac w-full rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
               >
                 Aller au tableau de bord
               </button>
@@ -103,7 +103,7 @@ export function ResetPassword() {
               </p>
               <button
                 onClick={() => navigate('/login')}
-                className="w-full rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all hover:from-[#f5543f] hover:to-[#ff7a55]"
+                className="btn-mac w-full rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
               >
                 Retour à la connexion
               </button>
@@ -112,7 +112,7 @@ export function ResetPassword() {
             /* ===== Form ===== */
             <>
               <div className="mb-8">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff6b5a] to-[#ff8a6b] shadow-lg shadow-[#ff6b5a]/30">
+                <div className="icon-tile mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
                   <Lock className="h-6 w-6 text-white" />
                 </div>
                 <h1 className="mb-2 text-2xl font-bold text-gray-900">Nouveau mot de passe</h1>
@@ -134,7 +134,7 @@ export function ResetPassword() {
                   <label htmlFor="password" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                     Nouveau mot de passe
                   </label>
-                  <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all duration-300 focus-within:border-[#ff6b5a] focus-within:bg-white">
+                  <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all duration-300 focus-within:border-[#542a52] focus-within:bg-white">
                     <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                     <input
                       type={showPassword ? 'text' : 'password'}
@@ -162,7 +162,7 @@ export function ResetPassword() {
                   <label htmlFor="confirm" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                     Confirmer le mot de passe
                   </label>
-                  <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all duration-300 focus-within:border-[#ff6b5a] focus-within:bg-white">
+                  <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all duration-300 focus-within:border-[#542a52] focus-within:bg-white">
                     <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                     <input
                       type={showPassword ? 'text' : 'password'}
@@ -180,7 +180,7 @@ export function ResetPassword() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all duration-300 hover:from-[#f5543f] hover:to-[#ff7a55] hover:shadow-xl hover:shadow-[#ff6b5a]/30 hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)] disabled:opacity-50"
                 >
                   {submitting ? (
                     <>

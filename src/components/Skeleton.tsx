@@ -24,7 +24,7 @@ export function Skeleton({ className = '', rounded = 'xl' }: SkeletonProps) {
   )
 }
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 /* ===== DASHBOARD SKELETON ===== */
 

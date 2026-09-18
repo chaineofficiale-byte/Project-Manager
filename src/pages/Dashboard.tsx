@@ -9,7 +9,7 @@ import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Toast } from '@/components/Toast'
 import { DashboardSkeleton } from '@/components/Skeleton'
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 export function Dashboard() {
   const navigate = useNavigate()
@@ -67,21 +67,21 @@ export function Dashboard() {
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div
           className="animate-blob absolute -left-40 top-[-10%] h-[500px] w-[500px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #ddd6fe, #e9d5ff)' }}
+          style={{ background: 'linear-gradient(135deg, #eed7ec, #e0bcd9)' }}
         />
         <div
           className="animate-blob absolute -right-32 top-[25%] h-[420px] w-[420px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #99f6e4, #5eead4)', animationDelay: '2s' }}
+          style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
         />
         <div
           className="animate-blob absolute bottom-[-15%] left-[35%] h-[360px] w-[360px] opacity-20 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #fde68a, #fcd34d)', animationDelay: '4s' }}
+          style={{ background: 'linear-gradient(135deg, #f6cfe9, #eab4de)', animationDelay: '4s' }}
         />
         <div
           className="absolute inset-0 opacity-[0.35]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(255,107,90,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,90,0.05) 1px, transparent 1px)',
+              'linear-gradient(rgba(84,42,82,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.05) 1px, transparent 1px)',
             backgroundSize: '50px 50px',
           }}
         />
@@ -93,10 +93,10 @@ export function Dashboard() {
           <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="animate-slide-up text-3xl font-bold tracking-tight text-gray-900" style={{ animationDelay: '100ms' }}>
+                <h2 className="animate-slide-up text-3xl font-bold tracking-tight text-gray-900" style={{ animationDelay: '40ms' }}>
                   Mes projets
                 </h2>
-                <p className="animate-slide-up mt-1.5 text-sm text-gray-500" style={{ animationDelay: '200ms' }}>
+                <p className="animate-slide-up mt-1.5 text-sm text-gray-500" style={{ animationDelay: '80ms' }}>
                   {projects.length > 0
                     ? `${projects.length} projet${projects.length > 1 ? 's' : ''} au total`
                     : 'Commencez par créer votre premier projet'}
@@ -104,8 +104,8 @@ export function Dashboard() {
               </div>
               <button
                 onClick={() => navigate('/project/new')}
-                className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all duration-300 hover:from-[#f5543f] hover:to-[#ff7a55] hover:shadow-xl hover:shadow-[#ff6b5a]/40 hover:-translate-y-0.5"
-                style={{ animationDelay: '300ms' }}
+                className="animate-slide-up inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)]"
+                style={{ animationDelay: '120ms' }}
               >
                 <Plus className="h-4 w-4" />
                 Ajouter un projet
@@ -116,16 +116,16 @@ export function Dashboard() {
 
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
           {projects.length > 0 && (
-            <div className="animate-slide-up mb-6 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '250ms' }}>
+            <div className="animate-slide-up mb-6 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '40ms' }}>
               {/* Search */}
               <div className="group relative flex-1">
-                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-[#ff6b5a]" />
+                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-[#542a52]" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Rechercher un projet..."
-                  className="w-full rounded-xl border border-gray-200 bg-white/70 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#ff6b5a] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff6b5a]/20"
+                  className="w-full rounded-xl border border-gray-200 bg-white/70 py-3 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-slate-900/5 backdrop-blur-md transition-all focus:border-[#542a52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#542a52]/20"
                 />
               </div>
 
@@ -133,10 +133,10 @@ export function Dashboard() {
               <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border border-gray-200 bg-white/70 p-1.5 shadow-sm shadow-slate-900/5 backdrop-blur-md">
                 <button
                   onClick={() => setStatusFilter('all')}
-                  className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-medium transition-all duration-300 ${
+                  className={`btn-mac inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
                     statusFilter === 'all'
-                      ? 'bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] text-white shadow-md shadow-[#ff6b5a]/25'
-                      : 'text-gray-500 hover:bg-[#fff4f1] hover:text-gray-900'
+                      ? 'bg-gradient-to-r from-[#542a52] to-[#6d3a69] text-white shadow-sm shadow-slate-900/10'
+                      : 'text-gray-500 hover:bg-[#f7ecf6] hover:text-gray-900'
                   }`}
                 >
                   <LayoutGrid className="h-3.5 w-3.5" />
@@ -146,10 +146,10 @@ export function Dashboard() {
                   <button
                     key={value}
                     onClick={() => setStatusFilter(value)}
-                    className={`rounded-xl px-3.5 py-2 text-xs font-medium transition-all duration-300 ${
+                    className={`btn-mac rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
                       statusFilter === value
-                        ? 'bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] text-white shadow-md shadow-[#ff6b5a]/25'
-                        : 'text-gray-500 hover:bg-[#fff4f1] hover:text-gray-900'
+                        ? 'bg-gradient-to-r from-[#542a52] to-[#6d3a69] text-white shadow-sm shadow-slate-900/10'
+                        : 'text-gray-500 hover:bg-[#f7ecf6] hover:text-gray-900'
                     }`}
                   >
                     {label}
@@ -163,11 +163,11 @@ export function Dashboard() {
           {projects.length === 0 ? (
             <div className="animate-scale-in flex flex-col items-center justify-center py-24">
               <div className="relative mb-8">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#ffd4cb]/60 to-[#99f6e4]/50 blur-2xl" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#fdd9d0]/60 to-[#ecd2e9]/50 blur-2xl" />
                 <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-gray-200 bg-white/80 backdrop-blur-xl">
-                  <FolderOpen className="h-11 w-11 text-[#ff6b5a]" />
+                  <FolderOpen className="h-11 w-11 text-[#542a52]" />
                 </div>
-                <div className="animate-float absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-orange-500 text-base shadow-lg shadow-amber-500/40">
+                <div className="icon-tile animate-float absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#fba593] to-[#ef7f69] text-base">
                   ✨
                 </div>
               </div>
@@ -177,7 +177,7 @@ export function Dashboard() {
               </p>
               <button
                 onClick={() => navigate('/project/new')}
-                className="btn-lift inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all hover:from-[#f5543f] hover:to-[#ff7a55]"
+                className="btn-mac inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58]"
               >
                 <Sparkles className="h-4 w-4" />
                 Ajouter mon premier projet
@@ -192,7 +192,7 @@ export function Dashboard() {
             /* Project grid */
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProjects.map((project, index) => (
-                <div key={project.id} className="animate-card-enter" style={{ animationDelay: `${Math.min(index * 75, 500)}ms` }}>
+                <div key={project.id} className="animate-card-enter" style={{ animationDelay: `${Math.min(index * 40, 240)}ms` }}>
                   <ProjectCard project={project} onDelete={setDeleteTarget} />
                 </div>
               ))}

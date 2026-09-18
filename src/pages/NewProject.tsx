@@ -6,7 +6,7 @@ import type { ProjectFormData } from '@/types/project'
 import { ProjectForm } from '@/components/ProjectForm'
 import { Toast } from '@/components/Toast'
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 export function NewProject() {
   const navigate = useNavigate()
@@ -32,11 +32,11 @@ export function NewProject() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="animate-blob absolute -left-40 top-[-10%] h-[420px] w-[420px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #ffd4cb, #ffb3a7)' }}
+          style={{ background: 'linear-gradient(135deg, #fdd9d0, #cfa3c8)' }}
         />
         <div
           className="animate-blob absolute -right-32 bottom-[-15%] h-[380px] w-[380px] opacity-20 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #99f6e4, #5eead4)', animationDelay: '2s' }}
+          style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
         />
       </div>
 
@@ -45,13 +45,13 @@ export function NewProject() {
         <div className="animate-slide-up pt-8">
           <button
             onClick={() => navigate('/dashboard')}
-            className="group mb-5 inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#ffb3a7] hover:bg-[#fff4f1] hover:text-gray-900"
+            className="group mb-5 inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6] hover:text-gray-900"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             Retour aux projets
           </button>
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff6b5a] to-[#ff8a6b] shadow-lg shadow-[#ff6b5a]/30">
+            <div className="icon-tile flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -62,10 +62,10 @@ export function NewProject() {
         </div>
 
         {/* Form card */}
-        <div className="animate-card-enter relative mt-6 overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-8" style={{ animationDelay: '150ms' }}>
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6b5a]/50 to-transparent" />
+        <div className="animate-card-enter relative mt-6 overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-8" style={{ animationDelay: '60ms' }}>
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/50 to-transparent" />
           {loading && (
-            <div className="mb-4 flex items-center gap-2 rounded-xl border border-[#ffd4cb] bg-[#fff4f1] p-3 text-sm text-[#ff6b5a]">
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-[#fdd9d0] bg-[#f7ecf6] p-3 text-sm text-[#542a52]">
               <Loader2 className="h-4 w-4 animate-spin" />
               Création en cours...
             </div>

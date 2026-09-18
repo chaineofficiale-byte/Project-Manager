@@ -12,7 +12,7 @@ import { EditProject } from '@/pages/EditProject'
 import { Settings } from '@/pages/Settings'
 import { Skeleton } from '@/components/Skeleton'
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()

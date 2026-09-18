@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Lock, Eye, EyeOff, Loader2, CheckCircle, Shield } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
-const PAGE_BG = 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)'
+const PAGE_BG = 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)'
 
 export function Settings() {
   const navigate = useNavigate()
@@ -57,11 +57,11 @@ export function Settings() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="animate-blob absolute -left-40 top-[-10%] h-[420px] w-[420px] opacity-25 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #ffd4cb, #ffb3a7)' }}
+          style={{ background: 'linear-gradient(135deg, #fdd9d0, #cfa3c8)' }}
         />
         <div
           className="animate-blob absolute -right-32 bottom-[-15%] h-[380px] w-[380px] opacity-20 blur-3xl"
-          style={{ background: 'linear-gradient(135deg, #99f6e4, #5eead4)', animationDelay: '2s' }}
+          style={{ background: 'linear-gradient(135deg, #ecd2e9, #f8c5ba)', animationDelay: '2s' }}
         />
       </div>
 
@@ -70,7 +70,7 @@ export function Settings() {
         <div className="animate-slide-up pt-8">
           <button
             onClick={() => navigate('/dashboard')}
-            className="group mb-5 inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#ffb3a7] hover:bg-[#fff4f1] hover:text-gray-900"
+            className="group mb-5 inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 text-sm font-medium text-gray-600 backdrop-blur-md transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6] hover:text-gray-900"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             Retour aux projets
@@ -80,10 +80,10 @@ export function Settings() {
 
         <div className="mt-6 space-y-6">
           {/* Profile info */}
-          <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl" style={{ animationDelay: '150ms' }}>
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6b5a]/50 to-transparent" />
+          <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl" style={{ animationDelay: '60ms' }}>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/50 to-transparent" />
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff6b5a] to-[#ff8a6b] shadow-lg shadow-[#ff6b5a]/30">
+              <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
                 <Shield className="h-7 w-7 text-white" />
               </div>
               <div>
@@ -94,10 +94,10 @@ export function Settings() {
           </div>
 
           {/* Change password form */}
-          <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-7" style={{ animationDelay: '250ms' }}>
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#14b8a6]/50 to-transparent" />
+          <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-7" style={{ animationDelay: '40ms' }}>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#fb9b8a]/50 to-transparent" />
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#14b8a6] to-[#0d9488] shadow-lg shadow-[#14b8a6]/30">
+              <div className="icon-tile flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#fb9b8a] to-[#f2836f] shadow-lg shadow-[#fb9b8a]/30">
                 <Lock className="h-5 w-5 text-white" />
               </div>
               <div>
@@ -125,8 +125,8 @@ export function Settings() {
                 <label htmlFor="newPassword" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Nouveau mot de passe
                 </label>
-                <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all focus-within:border-[#ff6b5a] focus-within:bg-white">
-                  <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 focus-within:text-[#ff6b5a]" />
+                <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all focus-within:border-[#542a52] focus-within:bg-white">
+                  <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 focus-within:text-[#542a52]" />
                   <input
                     type={showNewPassword ? 'text' : 'password'}
                     id="newPassword"
@@ -152,7 +152,7 @@ export function Settings() {
                 <label htmlFor="confirmPassword" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Confirmer le mot de passe
                 </label>
-                <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all focus-within:border-[#ff6b5a] focus-within:bg-white">
+                <div className="relative rounded-xl border border-gray-200 bg-white/70 transition-all focus-within:border-[#542a52] focus-within:bg-white">
                   <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
@@ -178,7 +178,7 @@ export function Settings() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-lift inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all hover:from-[#f5543f] hover:to-[#ff7a55] disabled:opacity-50"
+                  className="btn-mac inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58] disabled:opacity-50"
                 >
                   {loading ? (
                     <>

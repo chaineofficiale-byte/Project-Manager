@@ -29,11 +29,11 @@ function formatDate(dateStr: string): string {
 
 const ACTION_CONFIG: Record<string, { icon: typeof Clock; color: string; bg: string }> = {
   created: { icon: Plus, color: 'text-emerald-600', bg: 'bg-gradient-to-br from-emerald-500 to-green-500' },
-  edited: { icon: Pencil, color: 'text-[#0d9488]', bg: 'bg-gradient-to-br from-[#14b8a6] to-[#0d9488]' },
+  edited: { icon: Pencil, color: 'text-[#f2836f]', bg: 'bg-gradient-to-br from-[#fb9b8a] to-[#f2836f]' },
   status_changed: { icon: ArrowRightLeft, color: 'text-amber-600', bg: 'bg-gradient-to-br from-amber-500 to-orange-500' },
-  progress_updated: { icon: ArrowRightLeft, color: 'text-[#e85343]', bg: 'bg-gradient-to-br from-[#ff6b5a] to-[#ff8a6b]' },
+  progress_updated: { icon: ArrowRightLeft, color: 'text-[#6d3a69]', bg: 'bg-gradient-to-br from-[#542a52] to-[#6d3a69]' },
   paused: { icon: Pause, color: 'text-orange-600', bg: 'bg-gradient-to-br from-orange-500 to-amber-500' },
-  completed: { icon: CheckCircle, color: 'text-green-600', bg: 'bg-gradient-to-br from-[#14b8a6] to-[#0d9488]' },
+  completed: { icon: CheckCircle, color: 'text-green-600', bg: 'bg-gradient-to-br from-[#fb9b8a] to-[#f2836f]' },
   deleted: { icon: Trash2, color: 'text-red-600', bg: 'bg-gradient-to-br from-red-500 to-rose-500' },
 }
 
@@ -57,7 +57,7 @@ export function HistoryLog({ history }: HistoryLogProps) {
   return (
     <div className="relative">
       {/* Timeline line */}
-      <div className="absolute left-[15px] top-3 bottom-3 w-px bg-gradient-to-b from-[#ffd4cb] via-[#ffe9e4] to-transparent" />
+      <div className="absolute left-[15px] top-3 bottom-3 w-px bg-gradient-to-b from-[#fdd9d0] via-[#f0dfef] to-transparent" />
 
       <ul className="space-y-1">
         {sorted.map((entry, index) => {
@@ -68,10 +68,10 @@ export function HistoryLog({ history }: HistoryLogProps) {
             <li
               key={entry.id}
               className="animate-card-enter relative flex gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-gray-50"
-              style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}
+              style={{ animationDelay: `${Math.min(index * 25, 200)}ms` }}
             >
               {/* Icon dot */}
-              <div className="relative z-10 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full shadow-md shadow-gray-200">
+              <div className="icon-tile relative z-10 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full shadow-md shadow-gray-200">
                 <div className={`flex h-full w-full items-center justify-center rounded-full ${config.bg}`}>
                   <Icon className="h-3.5 w-3.5 text-white" />
                 </div>

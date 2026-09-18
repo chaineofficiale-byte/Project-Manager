@@ -25,7 +25,7 @@ export function PageTransition({ children }: PageTransitionProps) {
         // After exit animation, swap children and enter
         setDisplayChildren(children)
         setTransitionStage('enter')
-      }, 200) // Must match CSS exit animation duration
+      }, 100) // Must match CSS exit animation duration
       return () => clearTimeout(timer)
     }
   }, [transitionStage, children])

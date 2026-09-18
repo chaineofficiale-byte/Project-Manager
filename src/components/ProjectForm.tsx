@@ -29,7 +29,7 @@ const defaultFormData: ProjectFormData = {
 }
 
 const INPUT_CLASS =
-  'w-full rounded-xl border border-gray-200 bg-white/70 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 backdrop-blur-md transition-all focus:border-[#ff6b5a] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff6b5a]/20'
+  'w-full rounded-xl border border-gray-200 bg-white/70 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 backdrop-blur-md transition-all focus:border-[#542a52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#542a52]/20'
 
 const LABEL_CLASS = 'mb-1.5 block text-sm font-semibold text-gray-700'
 
@@ -211,7 +211,7 @@ export function ProjectForm({
       </div>
 
       {/* Links */}
-      <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '40ms' }}>
         <label className={LABEL_CLASS}>🔗 Liens du projet *</label>
         <div className="space-y-2">
           {formData.links.map((link, index) => (
@@ -240,7 +240,7 @@ export function ProjectForm({
         <button
           type="button"
           onClick={addLink}
-          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#ffb3a7] bg-[#fff4f1] px-3 py-1.5 text-xs font-medium text-[#ff6b5a] transition-all hover:border-[#ff6b5a] hover:bg-[#ffe9e4]"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#cfa3c8] bg-[#f7ecf6] px-3 py-1.5 text-xs font-medium text-[#542a52] transition-all hover:border-[#542a52] hover:bg-[#f0dfef]"
         >
           <Plus className="h-3.5 w-3.5" />
           Ajouter un lien
@@ -249,7 +249,7 @@ export function ProjectForm({
       </div>
 
       {/* Credentials */}
-      <div className="animate-slide-up" style={{ animationDelay: '150ms' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '60ms' }}>
         <label className={LABEL_CLASS}>🔑 Identifiants admin *</label>
         <div className="space-y-2">
           {formData.credentials.map((cred) => (
@@ -296,7 +296,7 @@ export function ProjectForm({
         <button
           type="button"
           onClick={addCredential}
-          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#ffb3a7] bg-[#fff4f1] px-3 py-1.5 text-xs font-medium text-[#ff6b5a] transition-all hover:border-[#ff6b5a] hover:bg-[#ffe9e4]"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#cfa3c8] bg-[#f7ecf6] px-3 py-1.5 text-xs font-medium text-[#542a52] transition-all hover:border-[#542a52] hover:bg-[#f0dfef]"
         >
           <Plus className="h-3.5 w-3.5" />
           Ajouter un identifiant
@@ -305,7 +305,7 @@ export function ProjectForm({
       </div>
 
       {/* Status */}
-      <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '80ms' }}>
         <label htmlFor="status" className={LABEL_CLASS}>
           📊 Statut *
         </label>
@@ -339,13 +339,13 @@ export function ProjectForm({
             setFormData((prev) => ({ ...prev, progress: Number(e.target.value) }))
           }}
           disabled={formData.status === 'termine'}
-          className="w-full accent-[#ff6b5a] disabled:opacity-40"
+          className="w-full accent-[#542a52] disabled:opacity-40"
         />
         <ProgressBar progress={formData.progress} status={formData.status} showLabel size="sm" />
       </div>
 
       {/* Start Date */}
-      <div className="animate-slide-up" style={{ animationDelay: '250ms' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '40ms' }}>
         <label htmlFor="start_date" className={LABEL_CLASS}>
           📅 Date de début *
         </label>
@@ -361,7 +361,7 @@ export function ProjectForm({
       </div>
 
       {/* Description */}
-      <div className="animate-slide-up" style={{ animationDelay: '300ms' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '120ms' }}>
         <label htmlFor="description" className={LABEL_CLASS}>
           📄 Description
         </label>
@@ -377,11 +377,11 @@ export function ProjectForm({
       </div>
 
       {/* Actions */}
-      <div className="flex gap-3 pt-2 animate-slide-up" style={{ animationDelay: '350ms' }}>
+      <div className="flex gap-3 pt-2 animate-slide-up" style={{ animationDelay: '140ms' }}>
         <button
           type="submit"
           disabled={loading}
-          className="btn-lift inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all hover:from-[#f5543f] hover:to-[#ff7a55] disabled:opacity-50"
+          className="btn-mac inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all hover:from-[#421f40] hover:to-[#5b2d58] disabled:opacity-50"
         >
           {loading ? loadingLabel : submitLabel}
         </button>

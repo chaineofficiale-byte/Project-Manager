@@ -31,7 +31,7 @@ export function ConfirmDialog({
       />
       <div className="relative z-10 mx-4 w-full max-w-md animate-scale-in rounded-3xl border border-gray-200/70 bg-white p-6 shadow-2xl shadow-slate-900/10">
         {/* Warning icon */}
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-orange-500/30">
+        <div className="icon-tile mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500">
           <AlertTriangle className="h-6 w-6 text-white" />
         </div>
         <h3 className="mb-2 text-center text-lg font-semibold text-gray-900">{title}</h3>
@@ -40,14 +40,14 @@ export function ConfirmDialog({
           <button
             onClick={onCancel}
             disabled={loading}
-            className="rounded-xl border border-gray-200 bg-white/70 px-5 py-2.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50"
+            className="btn-mac rounded-xl border border-gray-200 bg-white/70 px-5 py-2.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50"
           >
             {cancelLabel}
           </button>
           <button
             onClick={onConfirm}
             disabled={loading}
-            className="rounded-xl bg-gradient-to-r from-red-500 to-rose-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-red-500/30 transition-all hover:from-red-400 hover:to-rose-500 disabled:opacity-50"
+            className="btn-mac rounded-xl bg-gradient-to-r from-red-500 to-rose-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm shadow-red-500/25 transition-all hover:from-red-400 hover:to-rose-500 hover:shadow-[0_6px_16px_-6px_rgba(239,68,68,0.5)] disabled:opacity-50"
           >
             {loading ? 'Suppression...' : confirmLabel}
           </button>

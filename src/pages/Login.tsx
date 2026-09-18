@@ -24,7 +24,7 @@ function FloatingOrb({ delay, size, x, y, color }: { delay: string; size: string
 function Particle({ delay, x, y }: { delay: string; x: string; y: string }) {
   return (
     <div
-      className="animate-float absolute h-1.5 w-1.5 rounded-full bg-[#ff6b5a]/30"
+      className="animate-float absolute h-1.5 w-1.5 rounded-full bg-[#542a52]/30"
       style={{ left: x, top: y, animationDelay: delay }}
     />
   )
@@ -114,14 +114,14 @@ export function Login() {
   }
 
   return (
-    <div className="relative flex min-h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #fff3ef 0%, #fdfbf7 50%, #eefcf9 100%)' }}>
+    <div className="relative flex min-h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #faf3f9 0%, #fbf6fa 50%, #fdeee9 100%)' }}>
       {/* ===== LEFT SIDE - Animated Background ===== */}
       <div className="pointer-events-none relative hidden w-1/2 lg:block">
         {/* Gradient orbs */}
-        <FloatingOrb delay="0s" size="400px" x="-10%" y="10%" color="linear-gradient(135deg, #ffd4cb, #ffb3a7)" />
-        <FloatingOrb delay="2s" size="350px" x="60%" y="60%" color="linear-gradient(135deg, #99f6e4, #5eead4)" />
-        <FloatingOrb delay="4s" size="300px" x="30%" y="30%" color="linear-gradient(135deg, #fde68a, #fcd34d)" />
-        <FloatingOrb delay="1s" size="200px" x="70%" y="15%" color="linear-gradient(135deg, #ffd4cb, #fca595)" />
+        <FloatingOrb delay="0s" size="400px" x="-10%" y="10%" color="linear-gradient(135deg, #fdd9d0, #cfa3c8)" />
+        <FloatingOrb delay="2s" size="350px" x="60%" y="60%" color="linear-gradient(135deg, #ecd2e9, #f8c5ba)" />
+        <FloatingOrb delay="4s" size="300px" x="30%" y="30%" color="linear-gradient(135deg, #f6cfe9, #eab4de)" />
+        <FloatingOrb delay="1s" size="200px" x="70%" y="15%" color="linear-gradient(135deg, #fdd9d0, #f2836f)" />
 
         {/* Particles */}
         {Array.from({ length: 20 }).map((_, i) => (
@@ -135,23 +135,23 @@ export function Login() {
 
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-[0.35]" style={{
-          backgroundImage: 'linear-gradient(rgba(255,107,90,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,90,0.06) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(84,42,82,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(84,42,82,0.06) 1px, transparent 1px)',
           backgroundSize: '50px 50px',
         }} />
 
         {/* Content */}
         <div className="relative z-10 flex h-full flex-col justify-center px-16 xl:px-24">
-          <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
+          <div className="animate-slide-up" style={{ animationDelay: '80ms' }}>
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff6b5a] to-[#ff8a6b] shadow-lg shadow-[#ff6b5a]/30">
+              <div className="icon-tile flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
                 <Zap className="h-6 w-6 text-white" />
               </div>
-              <span className="text-sm font-semibold uppercase tracking-widest text-[#ff6b5a]/70">Project Manager</span>
+              <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
             </div>
 
             <h2 className="mb-4 text-5xl font-bold leading-tight text-gray-900 xl:text-6xl">
               Gérez vos projets<br />
-              <span className="bg-gradient-to-r from-[#ff6b5a] via-[#ff8a6b] to-[#14b8a6] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#542a52] via-[#6d3a69] to-[#fb9b8a] bg-clip-text text-transparent">
                 avec élégance.
               </span>
             </h2>
@@ -163,14 +163,14 @@ export function Login() {
             {/* Feature cards */}
             <div className="space-y-3">
               {[
-                { icon: Shield, text: 'Chiffrement de bout en bout', color: 'from-emerald-500 to-teal-500' },
-                { icon: Globe, text: 'Accès depuis n\'importe où', color: 'from-[#14b8a6] to-[#0d9488]' },
-                { icon: Zap, text: 'Ultra rapide et réactif', color: 'from-[#ff6b5a] to-[#ff8a6b]' },
+                { icon: Shield, text: 'Chiffrement de bout en bout', color: 'from-[#fb9b8a] to-[#f2836f]' },
+                { icon: Globe, text: 'Accès depuis n\'importe où', color: 'from-[#fb9b8a] to-[#f2836f]' },
+                { icon: Zap, text: 'Ultra rapide et réactif', color: 'from-[#542a52] to-[#6d3a69]' },
               ].map(({ icon: Icon, text, color }, i) => (
                 <div
                   key={text}
                   className="animate-slide-up flex items-center gap-3 rounded-xl border border-gray-200/70 bg-white/60 px-4 py-3 shadow-sm shadow-slate-900/5 backdrop-blur-sm"
-                  style={{ animationDelay: `${400 + i * 100}ms` }}
+                  style={{ animationDelay: `${160 + i * 40}ms` }}
                 >
                   <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${color} shadow-lg`}>
                     <Icon className="h-4 w-4 text-white" />
@@ -188,16 +188,16 @@ export function Login() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="mb-8 animate-scale-in text-center lg:hidden">
-            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff6b5a] to-[#ff8a6b] shadow-lg shadow-[#ff6b5a]/30">
+            <div className="icon-tile mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
               <Zap className="h-7 w-7 text-white" />
             </div>
-            <span className="text-sm font-semibold uppercase tracking-widest text-[#ff6b5a]/70">Project Manager</span>
+            <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
           </div>
 
           {/* Form card */}
           <div
             className="animate-scale-in rounded-3xl border border-gray-200/70 bg-white/70 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl"
-            style={{ animationDelay: '100ms' }}
+            style={{ animationDelay: '40ms' }}
           >
             {/* Header */}
             {signupSuccess ? (
@@ -207,7 +207,7 @@ export function Login() {
                 </div>
                 <h1 className="mb-2 text-2xl font-bold text-gray-900">Vérifiez votre boîte mail 📬</h1>
                 <p className="mb-6 text-sm text-gray-500">
-                  Un lien de confirmation a été envoyé à <span className="font-medium text-[#ff6b5a]">{email}</span>.
+                  Un lien de confirmation a été envoyé à <span className="font-medium text-[#542a52]">{email}</span>.
                   Confirmez votre email puis connectez-vous.
                 </p>
                 <button
@@ -226,10 +226,10 @@ export function Login() {
             ) : (
             <>
             <div className="mb-8">
-              <h1 className="animate-slide-up mb-2 text-2xl font-bold text-gray-900" style={{ animationDelay: '150ms' }}>
+              <h1 className="animate-slide-up mb-2 text-2xl font-bold text-gray-900" style={{ animationDelay: '60ms' }}>
                 {mode === 'login' ? 'Bienvenue 👋' : 'Créer un compte ✨'}
               </h1>
-              <p className="animate-slide-up text-sm text-gray-500" style={{ animationDelay: '200ms' }}>
+              <p className="animate-slide-up text-sm text-gray-500" style={{ animationDelay: '80ms' }}>
                 {mode === 'login'
                   ? 'Connectez-vous pour accéder à votre espace.'
                   : 'Enregistrez un nouvel accès en quelques secondes.'}
@@ -246,17 +246,17 @@ export function Login() {
               )}
 
               {/* Email */}
-              <div className="animate-slide-up" style={{ animationDelay: '250ms' }}>
+              <div className="animate-slide-up" style={{ animationDelay: '40ms' }}>
                 <label htmlFor="email" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Adresse email
                 </label>
                 <div className={`group relative rounded-xl border transition-all duration-300 ${
                   focusedField === 'email'
-                    ? 'border-[#ff6b5a] bg-white shadow-lg shadow-[#ff6b5a]/10'
+                    ? 'border-[#542a52] bg-white shadow-lg shadow-[#542a52]/10'
                     : 'border-gray-200 bg-white/70 hover:border-gray-300'
                 }`}>
                   <Mail className={`absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
-                    focusedField === 'email' ? 'text-[#ff6b5a]' : 'text-gray-400'
+                    focusedField === 'email' ? 'text-[#542a52]' : 'text-gray-400'
                   }`} />
                   <input
                     type="email"
@@ -273,17 +273,17 @@ export function Login() {
               </div>
 
               {/* Password */}
-              <div className="animate-slide-up" style={{ animationDelay: '300ms' }}>
+              <div className="animate-slide-up" style={{ animationDelay: '120ms' }}>
                 <label htmlFor="password" className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Mot de passe
                 </label>
                 <div className={`group relative rounded-xl border transition-all duration-300 ${
                   focusedField === 'password'
-                    ? 'border-[#ff6b5a] bg-white shadow-lg shadow-[#ff6b5a]/10'
+                    ? 'border-[#542a52] bg-white shadow-lg shadow-[#542a52]/10'
                     : 'border-gray-200 bg-white/70 hover:border-gray-300'
                 }`}>
                   <Lock className={`absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
-                    focusedField === 'password' ? 'text-[#ff6b5a]' : 'text-gray-400'
+                    focusedField === 'password' ? 'text-[#542a52]' : 'text-gray-400'
                   }`} />
                   <input
                     type={showPassword ? 'text' : 'password'}
@@ -307,14 +307,14 @@ export function Login() {
               </div>
 
               {/* Remember me + Forgot password */}
-              <div className="flex items-center justify-between" style={{ animationDelay: '325ms' }}>
+              <div className="flex items-center justify-between" style={{ animationDelay: '130ms' }}>
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     id="remember-me"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-[#ff6b5a] focus:ring-[#ff6b5a]"
+                    className="h-4 w-4 rounded border-gray-300 text-[#542a52] focus:ring-[#542a52]"
                   />
                   <label htmlFor="remember-me" className="cursor-pointer select-none text-sm text-gray-500 transition-colors hover:text-gray-700">
                     Se souvenir de moi
@@ -323,18 +323,18 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => navigate('/forgot-password')}
-                  className="text-sm text-[#ff6b5a] transition-colors hover:text-[#e85343] hover:underline"
+                  className="text-sm text-[#542a52] transition-colors hover:text-[#6d3a69] hover:underline"
                 >
                   Mot de passe oublié ?
                 </button>
               </div>
 
               {/* Submit */}
-              <div className="animate-slide-up pt-1" style={{ animationDelay: '350ms' }}>
+              <div className="animate-slide-up pt-1" style={{ animationDelay: '140ms' }}>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group/btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#ff6b5a] to-[#ff8a6b] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#ff6b5a]/25 transition-all duration-300 hover:from-[#f5543f] hover:to-[#ff7a55] hover:shadow-xl hover:shadow-[#ff6b5a]/30 hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                  className="group/btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#542a52] to-[#6d3a69] px-4 py-3.5 text-sm font-semibold text-white shadow-sm shadow-slate-900/10 transition-all btn-mac hover:from-[#421f40] hover:to-[#5b2d58] hover:shadow-[0_10px_22px_-8px_rgba(84,42,82,0.45)] disabled:opacity-50"
                 >
                   {submitting ? (
                     <>
@@ -355,7 +355,7 @@ export function Login() {
           </div>
 
           {/* Footer */}
-          <p className="animate-slide-up mt-8 text-center text-xs text-gray-400" style={{ animationDelay: '500ms' }}>
+          <p className="animate-slide-up mt-8 text-center text-xs text-gray-400" style={{ animationDelay: '80ms' }}>
             🔐 Connexion sécurisée • Chiffrée de bout en bout
           </p>
         </div>
