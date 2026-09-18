@@ -23,12 +23,12 @@ export function Toast({ message, type, onClose }: ToastProps) {
         }`}
       >
         {type === 'success' ? (
-          <div className="icon-tile flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-green-500 shadow-md shadow-emerald-500/40">
-            <CheckCircle className="h-4 w-4 text-white" />
+          <div className="icon-tile flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-emerald-600">
+            <CheckCircle className="h-4 w-4" />
           </div>
         ) : (
-          <div className="icon-tile flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-red-400 to-rose-500 shadow-md shadow-red-500/40">
-            <XCircle className="h-4 w-4 text-white" />
+          <div className="icon-tile flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-red-600">
+            <XCircle className="h-4 w-4" />
           </div>
         )}
         <p className="text-sm font-medium">{message}</p>

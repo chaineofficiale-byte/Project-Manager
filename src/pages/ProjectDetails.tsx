@@ -50,18 +50,18 @@ const RING_GRADIENTS: Record<ProjectStatus, [string, string, string]> = {
 
 /* ===== HISTORY ===== */
 
-const ACTION_STYLES: Record<string, { icon: typeof Clock; gradient: string }> = {
-  created: { icon: Plus, gradient: 'from-emerald-500 to-green-500' },
-  edited: { icon: Pencil, gradient: 'from-[#fb9b8a] to-[#f2836f]' },
-  status_changed: { icon: ArrowRightLeft, gradient: 'from-amber-500 to-orange-500' },
-  progress_updated: { icon: ArrowRightLeft, gradient: 'from-[#542a52] to-[#6d3a69]' },
-  paused: { icon: Pause, gradient: 'from-orange-500 to-amber-500' },
-  completed: { icon: CheckCircle2, gradient: 'from-[#fb9b8a] to-[#f2836f]' },
-  deleted: { icon: Trash2, gradient: 'from-red-500 to-rose-500' },
+const ACTION_STYLES: Record<string, { icon: typeof Clock; tone: string }> = {
+  created: { icon: Plus, tone: 'text-emerald-600' },
+  edited: { icon: Pencil, tone: 'text-[#f2836f]' },
+  status_changed: { icon: ArrowRightLeft, tone: 'text-amber-600' },
+  progress_updated: { icon: ArrowRightLeft, tone: 'text-[#542a52]' },
+  paused: { icon: Pause, tone: 'text-orange-600' },
+  completed: { icon: CheckCircle2, tone: 'text-green-600' },
+  deleted: { icon: Trash2, tone: 'text-red-600' },
 }
 
 function getActionStyle(action: string) {
-  return ACTION_STYLES[action] || { icon: Clock, gradient: 'from-gray-400 to-gray-500' }
+  return ACTION_STYLES[action] || { icon: Clock, tone: 'text-gray-600' }
 }
 
 function relativeTime(dateStr: string): string {
@@ -147,18 +147,18 @@ function GlassCard({
 function SectionTitle({
   icon: Icon,
   title,
-  gradient,
+  tone,
 }: {
   icon: typeof Clock
   title: string
-  gradient: string
+  tone: string
 }) {
   return (
     <div className="mb-5 flex items-center gap-3">
       <span
-        className={`icon-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} shadow-lg shadow-slate-900/10`}
+        className={`icon-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tone}`}
       >
-        <Icon className="h-4 w-4 text-white" />
+        <Icon className="h-4 w-4" />
       </span>
       <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">{title}</h3>
       <span className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" />
@@ -365,7 +365,7 @@ export function ProjectDetails() {
           <div className="space-y-6 lg:col-span-2">
             {/* Links */}
             <GlassCard delay={50}>
-              <SectionTitle icon={Link2} title="Liens du projet" gradient="from-[#fb9b8a] to-[#f2836f]" />
+              <SectionTitle icon={Link2} title="Liens du projet" tone="text-[#f2836f]" />
               {(project.links ?? []).length > 0 ? (
                 <ul className="space-y-2.5">
                   {(project.links ?? []).map((link) => (
@@ -374,7 +374,7 @@ export function ProjectDetails() {
                       className="group flex items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-white/60 px-4 py-3 transition-all hover:border-[#cfa3c8] hover:bg-[#f7ecf6]/50"
                     >
                       <div className="flex min-w-0 items-center gap-3">
-                        <span className="icon-tile flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#f6e3f4] to-[#ecd2e9] ring-1 ring-[#dfb9da]">
+                        <span className="icon-tile flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
                           <Link2 className="h-3.5 w-3.5 text-blue-500" />
                         </span>
                         <a
@@ -418,7 +418,7 @@ export function ProjectDetails() {
 
             {/* Credentials vault */}
             <GlassCard delay={80}>
-              <SectionTitle icon={KeyRound} title="Identifiants admin" gradient="from-[#542a52] to-[#6d3a69]" />
+              <SectionTitle icon={KeyRound} title="Identifiants admin" tone="text-[#542a52]" />
               {(project.credentials ?? []).length > 0 ? (
                 <ul className="space-y-3">
                   {(project.credentials ?? []).map((cred, index) => (
@@ -501,7 +501,7 @@ export function ProjectDetails() {
 
             {/* Description */}
             <GlassCard delay={110}>
-              <SectionTitle icon={FileText} title="Description" gradient="from-[#542a52] to-[#6d3a69]" />
+              <SectionTitle icon={FileText} title="Description" tone="text-[#542a52]" />
               <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-600">
                 {project.description || 'Aucune description.'}
               </p>
@@ -512,7 +512,7 @@ export function ProjectDetails() {
           <div className="space-y-6">
             {/* Actions */}
             <GlassCard delay={140}>
-              <SectionTitle icon={Pencil} title="Actions" gradient="from-[#542a52] to-[#6d3a69]" />
+              <SectionTitle icon={Pencil} title="Actions" tone="text-[#542a52]" />
               <div className="space-y-3">
                 <button
                   onClick={() => navigate(`/project/${project.id}/edit`)}
@@ -541,7 +541,7 @@ export function ProjectDetails() {
 
             {/* Dates */}
             <GlassCard delay={170}>
-              <SectionTitle icon={Calendar} title="Chronologie" gradient="from-[#fb9b8a] to-[#f2836f]" />
+              <SectionTitle icon={Calendar} title="Chronologie" tone="text-[#f2836f]" />
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs text-gray-400">Date de début</span>
@@ -559,7 +559,7 @@ export function ProjectDetails() {
 
         {/* ===== History ===== */}
         <GlassCard delay={200} className="mt-6">
-          <SectionTitle icon={History} title="Historique" gradient="from-[#542a52] to-[#6d3a69]" />
+          <SectionTitle icon={History} title="Historique" tone="text-[#542a52]" />
           {sortedHistory.length === 0 ? (
             <div className="py-8 text-center">
               <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300" />
@@ -569,15 +569,15 @@ export function ProjectDetails() {
             <div className="relative">
               <ul>
                 {sortedHistory.map((entry: HistoryEntry, index) => {
-                  const { icon: Icon, gradient } = getActionStyle(entry.action)
+                  const { icon: Icon, tone } = getActionStyle(entry.action)
                   const isLast = index === sortedHistory.length - 1
                   return (
                     <li key={entry.id} className="animate-card-enter relative flex gap-4" style={{ animationDelay: `${Math.min(index * 25, 200)}ms` }}>
                       <div className="flex flex-col items-center">
                         <span
-                          className={`icon-tile z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradient} shadow-lg shadow-slate-900/10`}
+                          className={`icon-tile z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${tone}`}
                         >
-                          <Icon className="h-3.5 w-3.5 text-white" />
+                          <Icon className="h-3.5 w-3.5" />
                         </span>
                         {!isLast && (
                           <span className="w-px flex-1 bg-gradient-to-b from-[#fdd9d0] to-transparent" />

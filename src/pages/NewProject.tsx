@@ -51,8 +51,8 @@ export function NewProject() {
             Retour aux projets
           </button>
           <div className="flex items-center gap-3">
-            <div className="icon-tile flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
-              <Sparkles className="h-5 w-5 text-white" />
+            <div className="icon-tile flex h-11 w-11 items-center justify-center rounded-2xl text-[#542a52]">
+              <Sparkles className="h-5 w-5" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Nouveau projet</h2>

@@ -31,8 +31,8 @@ export function ConfirmDialog({
       />
       <div className="relative z-10 mx-4 w-full max-w-md animate-scale-in rounded-3xl border border-gray-200/70 bg-white p-6 shadow-2xl shadow-slate-900/10">
         {/* Warning icon */}
-        <div className="icon-tile mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500">
-          <AlertTriangle className="h-6 w-6 text-white" />
+        <div className="icon-tile mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-amber-600">
+          <AlertTriangle className="h-6 w-6" />
         </div>
         <h3 className="mb-2 text-center text-lg font-semibold text-gray-900">{title}</h3>
         <p className="mb-6 text-center text-sm text-gray-500">{message}</p>

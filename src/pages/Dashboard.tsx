@@ -167,7 +167,7 @@ export function Dashboard() {
                 <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-gray-200 bg-white/80 backdrop-blur-xl">
                   <FolderOpen className="h-11 w-11 text-[#542a52]" />
                 </div>
-                <div className="icon-tile animate-float absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#fba593] to-[#ef7f69] text-base">
+                <div className="icon-tile animate-float absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full text-base">
                   ✨
                 </div>
               </div>

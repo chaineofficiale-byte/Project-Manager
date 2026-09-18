@@ -83,8 +83,8 @@ export function Settings() {
           <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl" style={{ animationDelay: '60ms' }}>
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#542a52]/50 to-transparent" />
             <div className="flex items-center gap-4">
-              <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
-                <Shield className="h-7 w-7 text-white" />
+              <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-2xl text-[#542a52]">
+                <Shield className="h-7 w-7" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">Mon compte</h3>
@@ -97,8 +97,8 @@ export function Settings() {
           <div className="animate-card-enter relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:p-7" style={{ animationDelay: '40ms' }}>
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#fb9b8a]/50 to-transparent" />
             <div className="mb-6 flex items-center gap-3">
-              <div className="icon-tile flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#fb9b8a] to-[#f2836f] shadow-lg shadow-[#fb9b8a]/30">
-                <Lock className="h-5 w-5 text-white" />
+              <div className="icon-tile flex h-10 w-10 items-center justify-center rounded-xl text-[#542a52]">
+                <Lock className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="text-base font-semibold text-gray-900">Changer le mot de passe</h3>

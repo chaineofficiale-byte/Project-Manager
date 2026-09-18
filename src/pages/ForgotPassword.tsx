@@ -93,8 +93,8 @@ export function ForgotPassword() {
             /* ===== Form state ===== */
             <>
               <div className="mb-8">
-                <div className="icon-tile mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
-                  <Mail className="h-6 w-6 text-white" />
+                <div className="icon-tile mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-[#542a52]">
+                  <Mail className="h-6 w-6" />
                 </div>
                 <h1 className="mb-2 text-2xl font-bold text-gray-900">Mot de passe oublié ?</h1>
                 <p className="text-sm text-gray-500">

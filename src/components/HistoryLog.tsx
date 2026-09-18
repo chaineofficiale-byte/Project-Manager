@@ -27,18 +27,18 @@ function formatDate(dateStr: string): string {
   })
 }
 
-const ACTION_CONFIG: Record<string, { icon: typeof Clock; color: string; bg: string }> = {
-  created: { icon: Plus, color: 'text-emerald-600', bg: 'bg-gradient-to-br from-emerald-500 to-green-500' },
-  edited: { icon: Pencil, color: 'text-[#f2836f]', bg: 'bg-gradient-to-br from-[#fb9b8a] to-[#f2836f]' },
-  status_changed: { icon: ArrowRightLeft, color: 'text-amber-600', bg: 'bg-gradient-to-br from-amber-500 to-orange-500' },
-  progress_updated: { icon: ArrowRightLeft, color: 'text-[#6d3a69]', bg: 'bg-gradient-to-br from-[#542a52] to-[#6d3a69]' },
-  paused: { icon: Pause, color: 'text-orange-600', bg: 'bg-gradient-to-br from-orange-500 to-amber-500' },
-  completed: { icon: CheckCircle, color: 'text-green-600', bg: 'bg-gradient-to-br from-[#fb9b8a] to-[#f2836f]' },
-  deleted: { icon: Trash2, color: 'text-red-600', bg: 'bg-gradient-to-br from-red-500 to-rose-500' },
+const ACTION_CONFIG: Record<string, { icon: typeof Clock; color: string }> = {
+  created: { icon: Plus, color: 'text-emerald-600' },
+  edited: { icon: Pencil, color: 'text-[#f2836f]' },
+  status_changed: { icon: ArrowRightLeft, color: 'text-amber-600' },
+  progress_updated: { icon: ArrowRightLeft, color: 'text-[#542a52]' },
+  paused: { icon: Pause, color: 'text-orange-600' },
+  completed: { icon: CheckCircle, color: 'text-green-600' },
+  deleted: { icon: Trash2, color: 'text-red-600' },
 }
 
 function getActionConfig(action: string) {
-  return ACTION_CONFIG[action] || { icon: Clock, color: 'text-gray-600', bg: 'bg-gradient-to-br from-gray-400 to-gray-500' }
+  return ACTION_CONFIG[action] || { icon: Clock, color: 'text-gray-600' }
 }
 
 export function HistoryLog({ history }: HistoryLogProps) {
@@ -71,10 +71,8 @@ export function HistoryLog({ history }: HistoryLogProps) {
               style={{ animationDelay: `${Math.min(index * 25, 200)}ms` }}
             >
               {/* Icon dot */}
-              <div className="icon-tile relative z-10 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full shadow-md shadow-gray-200">
-                <div className={`flex h-full w-full items-center justify-center rounded-full ${config.bg}`}>
-                  <Icon className="h-3.5 w-3.5 text-white" />
-                </div>
+              <div className={`icon-tile relative z-10 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full ${config.color}`}>
+                <Icon className="h-3.5 w-3.5" />
               </div>
 
               {/* Content */}

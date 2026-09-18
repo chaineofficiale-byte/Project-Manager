@@ -143,8 +143,8 @@ export function Login() {
         <div className="relative z-10 flex h-full flex-col justify-center px-16 xl:px-24">
           <div className="animate-slide-up" style={{ animationDelay: '80ms' }}>
             <div className="mb-6 flex items-center gap-3">
-              <div className="icon-tile flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
-                <Zap className="h-6 w-6 text-white" />
+              <div className="icon-tile flex h-12 w-12 items-center justify-center rounded-2xl text-[#542a52]">
+                <Zap className="h-6 w-6" />
               </div>
               <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
             </div>
@@ -163,17 +163,17 @@ export function Login() {
             {/* Feature cards */}
             <div className="space-y-3">
               {[
-                { icon: Shield, text: 'Chiffrement de bout en bout', color: 'from-[#fb9b8a] to-[#f2836f]' },
-                { icon: Globe, text: 'Accès depuis n\'importe où', color: 'from-[#fb9b8a] to-[#f2836f]' },
-                { icon: Zap, text: 'Ultra rapide et réactif', color: 'from-[#542a52] to-[#6d3a69]' },
+                { icon: Shield, text: 'Chiffrement de bout en bout', color: 'text-[#f2836f]' },
+                { icon: Globe, text: 'Accès depuis n\'importe où', color: 'text-[#f2836f]' },
+                { icon: Zap, text: 'Ultra rapide et réactif', color: 'text-[#542a52]' },
               ].map(({ icon: Icon, text, color }, i) => (
                 <div
                   key={text}
                   className="animate-slide-up flex items-center gap-3 rounded-xl border border-gray-200/70 bg-white/60 px-4 py-3 shadow-sm shadow-slate-900/5 backdrop-blur-sm"
                   style={{ animationDelay: `${160 + i * 40}ms` }}
                 >
-                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${color} shadow-lg`}>
-                    <Icon className="h-4 w-4 text-white" />
+                  <div className={`icon-tile flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${color}`}>
+                    <Icon className="h-4 w-4" />
                   </div>
                   <span className="text-sm text-gray-600">{text}</span>
                 </div>
@@ -188,8 +188,8 @@ export function Login() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="mb-8 animate-scale-in text-center lg:hidden">
-            <div className="icon-tile mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
-              <Zap className="h-7 w-7 text-white" />
+            <div className="icon-tile mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl text-[#542a52]">
+              <Zap className="h-7 w-7" />
             </div>
             <span className="text-sm font-semibold uppercase tracking-widest text-[#542a52]/70">Project Manager</span>
           </div>

@@ -13,8 +13,8 @@ export function Header() {
           onClick={() => navigate('/dashboard')}
           className="group flex items-center gap-2 transition-opacity hover:opacity-80"
         >
-          <div className="icon-tile flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#542a52] to-[#6d3a69]">
-            <Sparkles className="h-5 w-5 text-white" />
+          <div className="icon-tile flex h-9 w-9 items-center justify-center rounded-xl text-[#542a52]">
+            <Sparkles className="h-5 w-5" />
           </div>
           <h1 className="text-xl font-bold">
             <span className="bg-gradient-to-r from-[#542a52] via-[#6d3a69] to-[#fb9b8a] bg-clip-text text-transparent">

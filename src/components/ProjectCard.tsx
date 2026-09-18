@@ -42,8 +42,8 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
         {project.responsible && (
           <div className="mb-3 flex items-center gap-1.5 text-xs text-gray-500">
-            <span className="icon-tile flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#fba593] to-[#ef7f69] text-[10px] shadow-sm shadow-amber-500/40">
-              <User className="h-3 w-3 text-white" />
+            <span className="icon-tile flex h-5 w-5 items-center justify-center rounded-full text-[#542a52]">
+              <User className="h-3 w-3" />
             </span>
             <span>{project.responsible}</span>
           </div>

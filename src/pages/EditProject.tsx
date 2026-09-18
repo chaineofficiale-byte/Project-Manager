@@ -111,8 +111,8 @@ export function EditProject() {
             Retour au projet
           </button>
           <div className="flex items-center gap-3">
-            <div className="icon-tile flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#fb9b8a] to-[#f2836f] shadow-lg shadow-[#fb9b8a]/30">
-              <Pencil className="h-5 w-5 text-white" />
+            <div className="icon-tile flex h-11 w-11 items-center justify-center rounded-2xl text-[#542a52]">
+              <Pencil className="h-5 w-5" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Modifier le projet</h2>

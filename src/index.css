@@ -20,14 +20,25 @@ body {
 /* Finer, refined strokes (SF Symbols feel) */
 .lucide {
   stroke-width: 1.75;
+}/* Glassmorphism icon tile: translucent tinted glass + inner highlight */
+.icon-tile {
+  background-color: color-mix(in srgb, currentColor 14%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 4px 12px -4px rgba(15, 23, 42, 0.15);
 }
 
-/* macOS-style icon tile: soft inner highlight + gentle depth */
-.icon-tile {
+/* Softer variant: same glass recipe without depth (nested chips, inside cards) */
+.glass-soft {
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 4px 10px -2px rgba(15, 23, 42, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 /* ===== KEYFRAME ANIMATIONS ===== */
