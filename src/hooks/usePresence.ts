@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { RealtimeChannel, User } from '@supabase/supabase-js'
 
@@ -30,6 +30,8 @@ interface SharedState {
 let shared: SharedState | null = null
 const usersListeners = new Set<(u: OnlineUser[]) => void>()
 const readyListeners = new Set<(r: boolean) => void>()
+/** Called on THIS client when someone kicks it. Param = email of the kicker. */
+const kickListeners = new Set<(by: string) => void>()
 
 function emitUsers(users: OnlineUser[]) {
   if (shared) shared.users = users
@@ -99,6 +101,24 @@ function ensureShared(user: User): SharedState {
       .on('presence', { event: 'sync' }, () => syncFrom(channel))
       .on('presence', { event: 'join' }, () => syncFrom(channel))
       .on('presence', { event: 'leave' }, () => syncFrom(channel))
+      // Admin kick: "déconnecte ce compte". Registered BEFORE subscribe
+      // (realtime-js forbids adding callbacks after subscribe).
+      .on('broadcast', { event: 'kick' }, (msg) => {
+        try {
+          const payload = (msg as { payload?: { targetId?: string; by?: string } }).payload
+          if (payload?.targetId && payload.targetId === current.key) {
+            kickListeners.forEach((fn) => {
+              try {
+                fn(payload.by ?? '?')
+              } catch {
+                /* ignore */
+              }
+            })
+          }
+        } catch {
+          /* malformed kick message — ignore */
+        }
+      })
       .subscribe((status) => {
         if (status !== 'SUBSCRIBED') return
         channel
@@ -134,9 +154,12 @@ function releaseShared() {
   }
 }
 
-export function usePresence(user: User | null) {
+export function usePresence(user: User | null, onKicked?: (by: string) => void) {
   const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>(() => shared?.users ?? [])
   const [ready, setReady] = useState(() => shared?.ready ?? false)
+  // Always call the LATEST onKicked without re-subscribing the effect.
+  const kickedRef = useRef(onKicked)
+  kickedRef.current = onKicked
 
   useEffect(() => {
     if (!user) {
@@ -154,20 +177,43 @@ export function usePresence(user: User | null) {
       setReady(false)
       return
     }
+    const notifyKick = (by: string) => kickedRef.current?.(by)
     usersListeners.add(setOnlineUsers)
     readyListeners.add(setReady)
+    kickListeners.add(notifyKick)
     return () => {
       usersListeners.delete(setOnlineUsers)
       readyListeners.delete(setReady)
+      kickListeners.delete(notifyKick)
       try {
         releaseShared()
       } catch {
         /* ignore */
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, user?.email])
 
-  return { onlineUsers, ready }
+  return { onlineUsers, ready, kickUser }
+}
+
+/**
+ * Ask another online account to disconnect NOW.
+ * The target client signs out as soon as it receives the broadcast.
+ * Only works while the target is online; they can log back in after.
+ */
+export async function kickUser(targetId: string, by: string): Promise<boolean> {
+  if (!shared) return false
+  try {
+    await shared.channel.send({
+      type: 'broadcast',
+      event: 'kick',
+      payload: { targetId, by },
+    })
+    return true
+  } catch {
+    return false
+  }
 }
 
 /** 1-2 initials from an email for the avatar circle. */

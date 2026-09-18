@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { Lock, Mail, Loader2, Eye, EyeOff, ArrowRight, Shield, Zap, Globe, CheckCircle2, RotateCcw } from 'lucide-react'
+import { Lock, Mail, Loader2, Eye, EyeOff, ArrowRight, Shield, Zap, Globe, CheckCircle2, RotateCcw, LogOut } from 'lucide-react'
 import logoMark from '@/assets/logo-mark.png'
 import { AuthSkeleton } from '@/components/Skeleton'
 import { useAuth } from '@/hooks/useAuth'
@@ -49,6 +49,17 @@ export function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const [signupSuccess, setSignupSuccess] = useState(false)
+  // Notice shown when an admin disconnected this account (see Settings).
+  // Read once on mount; the flag is consumed immediately.
+  const [kickedBy] = useState<string | null>(() => {
+    try {
+      const by = localStorage.getItem('pm-kicked-by')
+      if (by) localStorage.removeItem('pm-kicked-by')
+      return by
+    } catch {
+      return null
+    }
+  })
 
   if (loading) {
     return <AuthSkeleton />
@@ -242,6 +253,14 @@ export function Login() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Kicked notice */}
+              {kickedBy && (
+                <div className="animate-bounce-in flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+                  <LogOut className="h-4 w-4 shrink-0" />
+                  Vous avez été déconnecté par {kickedBy}.
+                </div>
+              )}
+
               {/* Error */}
               {error && (
                 <div className="animate-bounce-in flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">

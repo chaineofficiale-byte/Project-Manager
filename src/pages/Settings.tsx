@@ -1,15 +1,24 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Lock, Eye, EyeOff, Loader2, CheckCircle, Users } from 'lucide-react'
+import { ArrowLeft, Lock, Eye, EyeOff, Loader2, CheckCircle, Users, LogOut } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { initialsOf, usePresence } from '@/hooks/usePresence'
+import { initialsOf, kickUser, usePresence, type OnlineUser } from '@/hooks/usePresence'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { Toast } from '@/components/Toast'
 
 const PAGE_BG = 'linear-gradient(135deg, #f8fafc 0%, #f8fafc 50%, #eef2ff 100%)'
 
 export function Settings() {
   const navigate = useNavigate()
-  const { user, changePassword } = useAuth()
-  const { onlineUsers, ready } = usePresence(user)
+  const { user, changePassword, signOut } = useAuth()
+  const { onlineUsers, ready } = usePresence(user, (by) => {
+    try {
+      localStorage.setItem('pm-kicked-by', by)
+    } catch {
+      /* storage unavailable */
+    }
+    void signOut()
+  })
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -17,6 +26,25 @@ export function Settings() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
+  const [kickTarget, setKickTarget] = useState<OnlineUser | null>(null)
+  const [kicking, setKicking] = useState(false)
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
+  async function handleKick() {
+    if (!kickTarget) return
+    setKicking(true)
+    try {
+      const sent = await kickUser(kickTarget.id, user?.email ?? '?')
+      setKickTarget(null)
+      setToast(
+        sent
+          ? { message: `${kickTarget.email} va être déconnecté.`, type: 'success' }
+          : { message: "Échec de l'envoi. Réessayez.", type: 'error' }
+      )
+    } finally {
+      setKicking(false)
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -149,9 +177,19 @@ export function Settings() {
                         Vous
                       </span>
                     ) : (
-                      <span className="shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-600 ring-1 ring-emerald-200">
-                        En ligne
-                      </span>
+                      <>
+                        <span className="hidden shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-600 ring-1 ring-emerald-200 sm:inline">
+                          En ligne
+                        </span>
+                        <button
+                          onClick={() => setKickTarget(u)}
+                          title={`Déconnecter ${u.email}`}
+                          className="btn-mac inline-flex shrink-0 items-center gap-1 rounded-lg border border-red-200 bg-red-50/60 px-2 py-1 text-[11px] font-medium text-red-600 transition-all hover:bg-red-50"
+                        >
+                          <LogOut className="h-3 w-3" />
+                          Déconnecter
+                        </button>
+                      </>
                     )}
                   </li>
                 ))}
@@ -271,6 +309,19 @@ export function Settings() {
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        isOpen={!!kickTarget}
+        title="Déconnecter ce compte ?"
+        message={`« ${kickTarget?.email ?? ''} » sera déconnecté du workspace immédiatement (s'il est en ligne). Il pourra se reconnecter après.`}
+        confirmLabel="Déconnecter"
+        cancelLabel="Annuler"
+        onConfirm={handleKick}
+        onCancel={() => setKickTarget(null)}
+        loading={kicking}
+      />
+
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   )
 }
